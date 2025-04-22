@@ -27,11 +27,16 @@ async function diagramToSvg(d2: D2, diagram: string, options: CompileOptions) {
 		options,
 		inputPath: DEFAULT_INPUT_PATH,
 	});
-	return d2.render(result.diagram, { ...result.renderOptions, ...options });
+	const renderedSvg = await d2.render(result.diagram, {
+		...result.renderOptions,
+		...options,
+	});
+	return renderedSvg;
 }
 
 export default () => {
 	const d2 = new D2();
+	let isRendering = false;
 
 	return {
 		async render({ model, el }: RenderProps<Model>) {
@@ -42,21 +47,40 @@ export default () => {
 				model.set("_svg", svg);
 				model.save_changes();
 			};
+			const getRoot = () => {
+				const root = el.firstChild as HTMLElement;
+				if (!root) {
+					throw new Error("Root element not found");
+				}
+				return root;
+			};
 
 			// Diagramming logic
 			const update = async () => {
+				// If another update is already in progress, do nothing
+				if (isRendering) {
+					console.log("Another update is already in progress, skipping");
+					return;
+				}
+
+				isRendering = true;
 				try {
 					const svg = await diagramToSvg(d2, getDiagram(), getOptions());
 					setSvg(svg);
-					el.innerHTML = svg;
-					el.classList.add("d2-widget");
+					getRoot().innerHTML = svg;
 				} catch (error: unknown) {
 					console.error(error);
 					const errorMessage =
 						error instanceof Error ? error.message : "Unknown error";
-					el.innerHTML = `<div class="error">Error generating diagram: ${errorMessage}</div>`;
+					getRoot().innerHTML = `<div class="error">Error generating diagram: ${errorMessage}</div>`;
 				}
+				isRendering = false;
 			};
+
+			// Set up root element
+			const root = document.createElement("div");
+			el.appendChild(root);
+			el.classList.add("d2-widget");
 
 			// Listeners to re-render diagram on model changes
 			model.on("change:diagram", update);
