@@ -18,6 +18,70 @@ or with [uv](https://github.com/astral-sh/uv):
 uv add d2-widget
 ```
 
+## Usage
+
+The following examples demonstrate how to use D2Widget with increasing complexity.
+
+### Basic Usage
+
+The simplest way to use D2Widget is to pass a D2 diagram as a string to the constructor.
+
+```python
+from d2_widget import D2Widget
+
+D2Widget("x -> y")
+```
+
+<img src="./assets/examples/simple.svg" alt="simple example" width="400"/>
+
+### Inline Configuration
+
+You can add direction and layout settings directly in the D2 markup.
+
+```python
+from d2_widget import D2Widget
+
+D2Widget("""
+direction: right
+x -> y
+""")
+```
+
+<img src="./assets/examples/simple-inline-config.svg" alt="simple example with inline configuration" width="400"/>
+
+### Compile Options
+
+You can specify compile options using the second argument to the constructor.
+You can read about the semantics of the options in the [D2 documentation](https://www.npmjs.com/package/@terrastruct/d2#compileoptions).
+
+```python
+from d2_widget import D2Widget
+
+D2Widget("""
+direction: right
+x -> y
+""",
+  {
+      "themeID": 200,  # ID of the "Dark mauve" theme
+      "pad": 0,        # Disable padding
+      "sketch": True,  # Enable sketch mode
+  },
+)
+```
+
+<img src="./assets/examples/compile-options.svg" alt="example with compile options" width="400"/>
+
+### Accessing the SVG
+
+You can access the generated SVG using the `svg` attribute.
+
+```python
+from d2_widget import D2Widget
+
+w = D2Widget("x -> y")
+w.svg
+```
+
 ## Development
 
 We recommend using [uv](https://github.com/astral-sh/uv) for development.
