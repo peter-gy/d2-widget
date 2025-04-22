@@ -42,7 +42,7 @@ class Widget(anywidget.AnyWidget):
         """
         super().__init__()
         self.diagram = diagram
-        self.options = {**DEFAULT_OPTIONS, **(options or {})}
+        self.options = options or DEFAULT_OPTIONS
 
     @property
     def svg(self) -> str:
