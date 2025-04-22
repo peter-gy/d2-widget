@@ -82,6 +82,29 @@ w = Widget("x -> y")
 w.svg
 ```
 
+### `%%d2` Cell Magic
+
+You can use the `%%d2` cell magic to display a D2 diagram in a Jupyter notebook.
+
+First, you need to load the extension:
+
+```python
+%load_ext d2_widget
+```
+
+Then, you can use the `%%d2` cell magic to display a D2 diagram.
+You can pass compile options to the cell magic using keyword arguments.
+
+```python
+%%d2 sketch=True themeID=200
+direction: right
+x -> y
+y -> z { style.animated: true }
+z -> x
+```
+
+<img src="./assets/examples/cell-magic.gif" alt="example with cell magic" width="100%"/>
+
 ## Development
 
 We recommend using [uv](https://github.com/astral-sh/uv) for development.
