@@ -19,7 +19,12 @@ interface Model {
 // TODO(peter-gy): Consider adding support for accepting `CompileRequest` payload with `fs` map allowing resolution of .d2 files referenced and imported in diagrams.
 // See: https://d2lang.com/tour/imports
 async function diagramToSvg(d2: D2, diagram: string, options: CompileOptions) {
-	const result = await d2.compile(diagram, { options, inputPath: "index" });
+	// For now we only support single-file diagrams
+	const DEFAULT_INPUT_PATH = "index";
+	const result = await d2.compile(diagram, {
+		options,
+		inputPath: DEFAULT_INPUT_PATH,
+	});
 	return d2.render(result.diagram, { ...result.renderOptions, ...options });
 }
 
