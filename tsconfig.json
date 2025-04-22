@@ -1,15 +1,9 @@
 {
-	"include": [
-		"js"
-	],
+	"include": ["js"],
 	"compilerOptions": {
 		"target": "ES2020",
 		"module": "ESNext",
-		"lib": [
-			"ES2020",
-			"DOM",
-			"DOM.Iterable"
-		],
+		"lib": ["ES2020", "DOM", "DOM.Iterable"],
 		"skipLibCheck": true,
 		"moduleResolution": "bundler",
 		"allowImportingTsExtensions": true,
@@ -22,7 +16,9 @@
 		"noUnusedParameters": true,
 		"noFallthroughCasesInSwitch": true,
 		"paths": {
-			"https://esm.sh/@terrastruct/d2@0.1.23-nightly.20250328.0b2203c10": ["./node_modules/@terrastruct/d2"]
+			"https://esm.sh/@terrastruct/d2@0.1.23": [
+				"./node_modules/@terrastruct/d2"
+			]
 		}
 	}
 }

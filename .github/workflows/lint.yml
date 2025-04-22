@@ -40,3 +40,6 @@ jobs:
 
       - name: Run frontend lint
         run: pnpm lint
+
+      - name: Run frontend typecheck
+        run: pnpm typecheck
