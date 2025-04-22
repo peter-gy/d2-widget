@@ -1,8 +1,10 @@
+[![PyPI](https://img.shields.io/pypi/v/d2-widget.svg)](https://pypi.org/project/d2-widget/)
+
 # D2 Widget <img src="./assets/logo.png" align="right" alt="d2-widget logo" width="150" style="filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.3));"/>
 
 > Bring the power of [D2](https://d2lang.com/) to Python notebooks.
 
-**d2-widget** is an [anywidget](https://github.com/manzt/anywidget) for displaying declarative diagrams written in [D2](https://d2lang.com/).
+**d2-widget** is an [AnyWidget](https://github.com/manzt/anywidget) for displaying declarative diagrams written in [D2](https://d2lang.com/).
 
 ## Installation
 

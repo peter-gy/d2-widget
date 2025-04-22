@@ -1,7 +1,7 @@
 [project]
 name = "d2-widget"
 version = "0.0.0"
-description = "AnyWidget wrapper for D2 diagrams"
+description = "An AnyWidget for displaying declarative diagrams written in D2"
 authors = [
     {name = "Péter Ferenc Gyarmati", email = "dev.petergy@gmail.com"},
 ]
@@ -62,3 +62,6 @@ dependencies = ["hatch-jupyter-builder>=0.5.0"]
 [tool.hatch.build.hooks.jupyter-builder.build-kwargs]
 npm = "pnpm"
 build_cmd = "build"
+
+[tool.uv]
+required-version = ">=0.6.0"
