@@ -15,7 +15,7 @@ DEFAULT_OPTIONS: CompileOptions = {
 }
 
 
-class D2Widget(anywidget.AnyWidget):
+class Widget(anywidget.AnyWidget):
     """An `anywidget.AnyWidget` wrapper for D2 diagrams.
 
     This widget allows you to render D2 diagrams in Jupyter notebooks and other
@@ -34,7 +34,7 @@ class D2Widget(anywidget.AnyWidget):
     options = traitlets.Dict().tag(sync=True)
 
     def __init__(self, diagram: str, options: Optional[CompileOptions] = None):
-        """Initializes a D2Widget.
+        """Initializes a Widget.
 
         Args:
             diagram (str): The diagram script to render.
