@@ -20,16 +20,16 @@ uv add d2-widget
 
 ## Usage
 
-The following examples demonstrate how to use D2Widget with increasing complexity.
+The following examples demonstrate how to use Widget with increasing complexity.
 
 ### Basic Usage
 
-The simplest way to use D2Widget is to pass a D2 diagram as a string to the constructor.
+The simplest way to use Widget is to pass a D2 diagram as a string to the constructor.
 
 ```python
-from d2_widget import D2Widget
+from d2_widget import Widget
 
-D2Widget("x -> y")
+Widget("x -> y")
 ```
 
 <img src="./assets/examples/simple.svg" alt="simple example" width="400"/>
@@ -39,9 +39,9 @@ D2Widget("x -> y")
 You can add direction and layout settings directly in the D2 markup.
 
 ```python
-from d2_widget import D2Widget
+from d2_widget import Widget
 
-D2Widget("""
+Widget("""
 direction: right
 x -> y
 """)
@@ -55,9 +55,9 @@ You can specify compile options using the second argument to the constructor.
 You can read about the semantics of the options in the [D2 documentation](https://www.npmjs.com/package/@terrastruct/d2#compileoptions).
 
 ```python
-from d2_widget import D2Widget
+from d2_widget import Widget
 
-D2Widget("""
+Widget("""
 direction: right
 x -> y
 """,
@@ -76,11 +76,34 @@ x -> y
 You can access the generated SVG using the `svg` attribute.
 
 ```python
-from d2_widget import D2Widget
+from d2_widget import Widget
 
-w = D2Widget("x -> y")
+w = Widget("x -> y")
 w.svg
 ```
+
+### `%%d2` Cell Magic
+
+You can use the `%%d2` cell magic to display a D2 diagram in a Jupyter notebook.
+
+First, you need to load the extension:
+
+```python
+%load_ext d2_widget
+```
+
+Then, you can use the `%%d2` cell magic to display a D2 diagram.
+You can pass compile options to the cell magic using keyword arguments.
+
+```python
+%%d2 sketch=True themeID=200
+direction: right
+x -> y
+y -> z { style.animated: true }
+z -> x
+```
+
+<img src="./assets/examples/cell-magic.gif" alt="example with cell magic" width="100%"/>
 
 ## Development
 
