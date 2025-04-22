@@ -1,0 +1,28 @@
+{
+	"include": [
+		"js"
+	],
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "ESNext",
+		"lib": [
+			"ES2020",
+			"DOM",
+			"DOM.Iterable"
+		],
+		"skipLibCheck": true,
+		"moduleResolution": "bundler",
+		"allowImportingTsExtensions": true,
+		"resolveJsonModule": true,
+		"isolatedModules": true,
+		"noEmit": true,
+		"jsx": "react",
+		"strict": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"noFallthroughCasesInSwitch": true,
+		"paths": {
+			"https://esm.sh/@terrastruct/d2@0.1.23-nightly.20250328.0b2203c10": ["./node_modules/@terrastruct/d2"]
+		}
+	}
+}

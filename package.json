@@ -1,0 +1,24 @@
+{
+	"scripts": {
+		"dev": "esbuild js/widget.ts --minify --format=esm --bundle --outdir=src/d2_widget/static --sourcemap=inline --watch",
+		"build": "esbuild js/widget.ts --minify --format=esm --bundle --outdir=src/d2_widget/static",
+		"typecheck": "tsc --noEmit",
+		"format": "biome format --write .",
+		"lint": "biome lint ."
+	},
+	"dependencies": {},
+	"devDependencies": {
+		"@anywidget/types": "^0.2.0",
+		"@biomejs/biome": "1.5.3",
+		"@terrastruct/d2": "0.1.23-nightly.20250328.0b2203c10",
+		"esbuild": "^0.25.1",
+		"typescript": "^5.8.2"
+	},
+	"packageManager": "pnpm@10.4.1",
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"@biomejs/biome",
+			"esbuild"
+		]
+	}
+}

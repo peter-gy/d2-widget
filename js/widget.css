@@ -1,0 +1,13 @@
+.d2-widget {
+    width: 100%;
+}
+
+.error {
+    padding: 10px;
+    color: #721c24;
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+    margin: 10px 0;
+    font-family: sans-serif;
+}
