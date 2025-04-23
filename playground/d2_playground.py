@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "d2-widget==0.0.1rc2",
+#     "d2-widget==0.0.0",
 #     "httpx==0.28.1",
 #     "marimo",
 # ]
@@ -19,11 +19,11 @@ def _(mo):
         r"""
         # D2 Playground
 
-        Explore the D2 language with this interactive runner. Start scripting yourself, or get up and running with demo snippets.
+        Dive into D2 with this interactive playground — create diagrams from scratch or explore curated examples.
 
         > Inspired by [play.d2lang.com](https://play.d2lang.com/), powered by [d2-widget](https://github.com/peter-gy/d2-widget) and [marimo](https://marimo.io/).
         >
-        > Snippets were sourced from [terrastruct/d2-docs](https://github.com/terrastruct/d2-docs).
+        > Snippets curated from [terrastruct/d2-docs](https://github.com/terrastruct/d2-docs).
         """
     )
     return
@@ -228,10 +228,14 @@ def _(find_script, mo, set_script, set_should_show_editor, snippets_data):
 
 
 @app.cell(hide_code=True)
-def _(json):
-    snippets_data_full = json.load(
-        open("/Users/petergy/Projects/personal/d2-widget/playground/snippets.json")
-    )
+def _(httpx):
+    SNIPPETS_URL = "https://minio.peter.gy/static/drop/d2-snippets.json"
+    snippets_data_full = httpx.get(SNIPPETS_URL).json()
+    return (snippets_data_full,)
+
+
+@app.cell(hide_code=True)
+def _(snippets_data_full):
     snippets_data = [
         {
             "Category": s["category"],
@@ -295,11 +299,12 @@ def _():
 
 @app.cell(hide_code=True)
 def _():
+    import httpx
     import marimo as mo
-    import d2_widget
-    import json
 
-    return d2_widget, json, mo
+    import d2_widget
+
+    return d2_widget, httpx, mo
 
 
 if __name__ == "__main__":
