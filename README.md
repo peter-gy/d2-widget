@@ -1,6 +1,6 @@
 [![PyPI](https://img.shields.io/pypi/v/d2-widget.svg)](https://pypi.org/project/d2-widget/)
 
-# D2 Widget <img src="./assets/logo.png" align="right" alt="d2-widget logo" width="150" style="filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.3));"/>
+# D2 Widget <img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/logo.png" align="right" alt="d2-widget logo" width="150" style="filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.3));"/>
 
 > Bring the power of [D2](https://d2lang.com/) to Python notebooks.
 
@@ -32,7 +32,7 @@ from d2_widget import Widget
 Widget("x -> y")
 ```
 
-<img src="./assets/examples/simple.svg" alt="simple example" width="400"/>
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/simple.svg" alt="simple example" width="400"/>
 
 ### Inline Configuration
 
@@ -47,7 +47,7 @@ x -> y
 """)
 ```
 
-<img src="./assets/examples/simple-inline-config.svg" alt="simple example with inline configuration" width="400"/>
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/simple-inline-config.svg" alt="simple example with inline configuration" width="400"/>
 
 ### Compile Options
 
@@ -69,7 +69,7 @@ x -> y
 )
 ```
 
-<img src="./assets/examples/compile-options.svg" alt="example with compile options" width="400"/>
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/compile-options.svg" alt="example with compile options" width="400"/>
 
 ### Accessing the SVG
 
@@ -103,7 +103,7 @@ y -> z { style.animated: true }
 z -> x
 ```
 
-<img src="./assets/examples/cell-magic.gif" alt="example with cell magic" width="100%"/>
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/cell-magic.gif" alt="example with cell magic" width="100%"/>
 
 ## Development
 

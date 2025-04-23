@@ -229,7 +229,7 @@ def _(find_script, mo, set_script, set_should_show_editor, snippets_data):
 
 @app.cell(hide_code=True)
 def _(httpx):
-    SNIPPETS_URL = "https://minio.peter.gy/static/drop/d2-snippets.json"
+    SNIPPETS_URL = "https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/playground/snippets.json"
     snippets_data_full = httpx.get(SNIPPETS_URL).json()
     return (snippets_data_full,)
 
@@ -274,11 +274,11 @@ def _():
 
     nbenv: "Python Notebook Environment" {
       shape: image
-      icon: https://minio.peter.gy/static/drop/notebook-envs.svg
+      icon: https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/notebook-envs.svg
     }
 
     d2widget: "d2-widget" {
-      icon: https://minio.peter.gy/static/drop/d2-widget-logo.png
+      icon: https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/logo.png
       d2: "D2" {
         shape: image
         icon: https://d2lang.com/img/d2_graphic.svg
