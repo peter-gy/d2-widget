@@ -1,4 +1,5 @@
 [![PyPI](https://img.shields.io/pypi/v/d2-widget.svg)](https://pypi.org/project/d2-widget/)
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/peter-gy/d2-widget/blob/main/LICENSE)
 
 # D2 Widget <img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/logo.png" align="right" alt="d2-widget logo" width="150" style="filter: drop-shadow(3px 3px 3px rgba(0,0,0,0.3));"/>
 
