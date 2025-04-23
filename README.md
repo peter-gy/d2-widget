@@ -18,7 +18,7 @@
 
 Visit the interactive [playground](https://d2-widget.peter.gy) to try out what `d2-widget` can do.
 
-<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/playground.gif" alt="playground" width="75%"/>
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/playground.gif" alt="playground" width="100%"/>
 
 ## Installation
 
