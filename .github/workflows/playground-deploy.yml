@@ -26,7 +26,7 @@ jobs:
 
       - name: Export notebook
         run: |
-          marimo export html-wasm playground/d2_playground.py -o playground/dist --mode run
+          uv run marimo export html-wasm playground/d2_playground.py -o playground/dist --mode run
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v3
