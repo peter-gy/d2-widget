@@ -10,7 +10,11 @@
 import marimo
 
 __generated_with = "0.13.0"
-app = marimo.App(width="full", app_title="D2 Playground")
+app = marimo.App(
+    width="full",
+    app_title="D2 Playground",
+    html_head_file="head.html",
+)
 
 
 @app.cell(hide_code=True)
@@ -22,8 +26,6 @@ def _(mo):
         Dive into D2 with this interactive playground — create diagrams from scratch or explore curated examples.
 
         > Inspired by [play.d2lang.com](https://play.d2lang.com/), powered by [d2-widget](https://github.com/peter-gy/d2-widget) and [marimo](https://marimo.io/).
-        >
-        > Snippets curated from [terrastruct/d2-docs](https://github.com/terrastruct/d2-docs).
         """
     )
     return
@@ -65,12 +67,6 @@ def _(
             ),
         ],
     )
-    return
-
-
-@app.cell(hide_code=True)
-def _(mo):
-    mo.md(r"""---""")
     return
 
 
@@ -220,7 +216,8 @@ def _(find_script, mo, set_script, set_should_show_editor, snippets_data):
 
     snippets = mo.ui.table(
         data=snippets_data,
-        page_size=10,
+        label="Snippets from [terrastruct/d2-docs](https://github.com/terrastruct/d2-docs/tree/master/static)",
+        page_size=5,
         selection="single",
         on_change=on_snippet_selected,
     )
