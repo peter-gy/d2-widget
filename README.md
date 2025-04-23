@@ -6,6 +6,19 @@
 
 **d2-widget** is an [AnyWidget](https://github.com/manzt/anywidget) for displaying declarative diagrams written in [D2](https://d2lang.com/).
 
+- 🎨 **D2 Diagram Rendering**: Create and display interactive D2 diagrams directly in Python notebooks
+- ⚙️ **Configurability**: Support for all D2 compilation options including themes, layouts, and rendering configurations
+- 📤 **SVG Export**: Programmatically access the SVG representation for use in other documents
+- ✨ **Jupyter Cell Magic**: Use the convenient `%%d2` cell magic for quick diagram creation
+- 🧩 **Notebook Compatibility**: Works in Jupyter, Google Colab, Marimo, and other other [AnyWidget](https://github.com/manzt/anywidget)-enabled Python notebook environments
+- 🎬 **Animation Support**: Create animated diagrams with D2's native animation capabilities
+
+## Playground
+
+Visit the interactive [playground](https://d2-widget.peter.gy) to try out what `d2-widget` can do.
+
+<img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/playground.gif" alt="playground" width="75%"/>
+
 ## Installation
 
 ```sh
