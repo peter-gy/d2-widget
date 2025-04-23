@@ -8,10 +8,8 @@ from d2_widget._model import CompileOptions
 
 # These defaults ensure that multi-layer, animated diagrams are rendered by default.
 DEFAULT_OPTIONS: CompileOptions = {
-    "noXMLTag": True,
     "target": "*",
     "animateInterval": 1500,
-    "pad": 25,
 }
 
 
