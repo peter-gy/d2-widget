@@ -10,7 +10,11 @@
 import marimo
 
 __generated_with = "0.13.0"
-app = marimo.App(width="full", app_title="D2 Playground")
+app = marimo.App(
+    width="full",
+    app_title="D2 Playground",
+    html_head_file="head.html",
+)
 
 
 @app.cell(hide_code=True)
