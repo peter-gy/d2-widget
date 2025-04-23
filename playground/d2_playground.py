@@ -1,7 +1,7 @@
 # /// script
 # requires-python = ">=3.11"
 # dependencies = [
-#     "d2-widget==0.0.0",
+#     "d2-widget",
 #     "httpx==0.28.1",
 #     "marimo",
 # ]
