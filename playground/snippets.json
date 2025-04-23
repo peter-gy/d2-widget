@@ -1,0 +1,1052 @@
+[
+	{
+		"filename": "containers-2",
+		"script": "clouds: {\n  aws: {\n    load_balancer -> api\n    api -> db\n  }\n  gcloud: {\n    auth -> db\n  }\n\n  gcloud -> aws\n}\n",
+		"name": "Nested Cloud Infrastructure",
+		"category": "Containers"
+	},
+	{
+		"filename": "language",
+		"script": "a: \"\u597d\u7b11\u7684\u732b\u54aa\u8df3\u821e\uff0c\\n \u5728\u6708\u4eae\u4e0b\u6b22\u5531\u3002\\n \u5b83\u8e29\u5728\u5c0f\u9752\u86d9\u5934\u4e0a\uff0c\\n \u5634\u91cc\u56bc\u7740\u82f9\u679c\u9999\u3002\"\nb: \"\uc6c3\uae30\ub294 \uace0\uc591\uc774 \ub0a0\ub2e4,\\n \ub2ec\ube5b \uc544\ub798 \ucda4\uc744 \ucd94\ub2e4.\\n \uac1c\uad6c\ub9ac \uba38\ub9ac \ubc1f\ub2e4,\\n \uc785 \uc18d \uc0ac\uacfc \ud5a5\uae30 \uc990\uae30\ub2e4.\"\n\na -> b\n\na.style.font-size: 24\nb.style.font-size: 24\n",
+		"name": "Multi-language Text",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "globs-nested",
+		"script": "conversation 1: {\n  shape: sequence_diagram\n  alice -> bob: hi\n  bob -> alice: hi\n}\n\nconversation 2: {\n  shape: sequence_diagram\n  alice -> bob: hello again\n  alice -> bob: hello?\n  bob -> alice: hello\n}\n\n# Recursively target all shapes...\n**: {\n  # ... that are sequence diagrams\n  &shape: sequence_diagram\n  # Then recursively set all shapes in them to person\n  **: {shape: person}\n}\n",
+		"name": "Nested Glob Styling",
+		"category": "Globs"
+	},
+	{
+		"filename": "classes-3",
+		"script": "DebitCard: Debit card {\n  shape: class\n  +cardno\n  +ownedBy\n\n  +access()\n}\n\nBank: {\n  shape: class\n  +code\n  +address\n\n  +manages()\n  +maintains()\n}\n\nATMInfo: ATM info {\n  shape: class\n  +location\n  +manageBy\n\n  +identifies()\n  +transactions()\n}\n\nCustomer: {\n  shape: class\n  +name\n  +address\n  +dob\n\n  +owns()\n}\n\nAccount: {\n  shape: class\n  +type\n  +owner\n}\n\nATMTransaction: ATM Transaction {\n  shape: class\n  +transactionId\n  +date\n  +type\n\n  +modifies()\n}\n\nCurrentAccount: Current account {\n  shape: class\n  +accountNo\n  +balance\n\n  +debit()\n  +credit()\n}\n\nSavingAccount: Saving account {\n  shape: class\n  +accountNo\n  +balance\n\n  +debit()\n  +credit()\n}\n\nWidthdrawlTransaction: Withdrawl transaction {\n  shape: class\n  +amount\n\n  +Withdrawl()\n}\n\nQueryTransaction: Query transaction {\n  shape: class\n  +query\n  +type\n\n  +queryProcessing()\n}\n\nTransferTransaction: Transfer transaction {\n  shape: class\n  +account\n  +accountNo\n}\n\nPinValidation: Pin validation transaction {\n  shape: class\n  +oldPin\n  +newPin\n\n  +pinChange()\n}\n\nDebitCard -- Bank: manages {\n  source-arrowhead: 1..*\n  target-arrowhead: 1\n}\n\nBank -- ATMInfo: maintains {\n  source-arrowhead: 1\n  target-arrowhead: 1\n}\n\nBank -- Customer: +has {\n  source-arrowhead: 1\n  target-arrowhead: 1\n}\n\nDebitCard -- Customer: +owns {\n  source-arrowhead: 0..*\n  target-arrowhead: 1..*\n}\n\nDebitCard -- Account: +provides access to {\n  source-arrowhead: *\n  target-arrowhead: 1..*\n}\n\nCustomer -- Account: owns {\n  source-arrowhead: 1..*\n  target-arrowhead: 1..*\n}\n\nATMInfo -- ATMTransaction: +identifies {\n  source-arrowhead: 1\n  target-arrowhead: *\n}\n\nATMTransaction -> Account: modifies {\n  source-arrowhead: *\n  target-arrowhead: 1\n}\n\nCurrentAccount -> Account: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\n\nSavingAccount -> Account: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\n\nWidthdrawlTransaction -> ATMTransaction: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\nQueryTransaction -> ATMTransaction: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\nTransferTransaction -> ATMTransaction: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\nPinValidation -> ATMTransaction: {\n  target-arrowhead.shape: triangle\n  target-arrowhead.style.filled: false\n}\n",
+		"name": "ATM System Class Diagram",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "grid-connected",
+		"script": "direction: right\n\nusers -- via -- teleport\n\nteleport -> jita: \"all connections audited and logged\"\nteleport -> infra\n\nteleport -> identity provider\nteleport <- identity provider\n\nusers: \"\" {\n  grid-columns: 1\n\n  Engineers: {\n    shape: circle\n    icon: https://icons.terrastruct.com/essentials%2F365-user.svg\n  }\n  Machines: {\n    shape: circle\n    icon: https://icons.terrastruct.com/aws%2FCompute%2FCompute.svg\n  }\n}\n\nvia: \"\" {\n  grid-columns: 1\n\n  https: \"HTTPS://\"\n  kubectl: \"> kubectl\"\n  tsh: \"> tsh\"\n  api: \"> api\"\n  db clients: \"DB Clients\"\n}\n\nteleport: Teleport {\n  grid-rows: 2\n\n  inp: |md\n    # Identity Native Proxy\n  | {\n    width: 300\n  }\n\n  Audit Log.icon: https://icons.terrastruct.com/tech%2Flaptop.svg\n  Cert Authority.icon: https://icons.terrastruct.com/azure%2FWeb%20Service%20Color%2FApp%20Service%20Certificates.svg\n}\n\njita: \"Just-in-time Access via\" {\n  grid-rows: 1\n\n  Slack.icon: https://icons.terrastruct.com/dev%2Fslack.svg\n  Mattermost\n  Jira\n  Pagerduty\n  Email.icon: https://icons.terrastruct.com/aws%2F_General%2FAWS-Email_light-bg.svg\n}\n\ninfra: Infrastructure {\n  grid-rows: 2\n\n  ssh.icon: https://icons.terrastruct.com/essentials%2F112-server.svg\n  Kubernetes.icon: https://icons.terrastruct.com/azure%2F_Companies%2FKubernetes.svg\n  My SQL.icon: https://icons.terrastruct.com/dev%2Fmysql.svg\n  MongoDB.icon: https://icons.terrastruct.com/dev%2Fmongodb.svg\n  PSQL.icon: https://icons.terrastruct.com/dev%2Fpostgresql.svg\n  Windows.icon: https://icons.terrastruct.com/dev%2Fwindows.svg\n}\n\nidentity provider: Identity Provider {\n  icon: https://icons.terrastruct.com/azure%2FIdentity%20Service%20Color%2FIdentity%20governance.svg\n}\n",
+		"name": "Grid Layout with Icons",
+		"category": "Layout"
+	},
+	{
+		"filename": "sample6",
+		"script": "ibm: IBM \"Espresso\" CPU {\n  core0: IBM PowerPC \"Broadway\" Core 0\n  core1: IBM PowerPC \"Broadway\" Core 1\n  core2: IBM PowerPC \"Broadway\" Core 2\n\n  rom: 16 KB ROM\n\n  core0 -- core2\n\n  rom -> core2\n}\n\namd: AMD \"Latte\" GPU {\n  mem: Memory & I/O Bridge\n  dram: DRAM Controller\n  edram: 32 MB EDRAM \"MEM1\"\n  rom: 512 B SEEPROM\n\n  sata: SATA IF\n  exi: EXI (Efficient XML Interchange)\n\n  gx: GX {\n    3 MB 1T-SRAM\n  }\n\n  radeon: AMD Radeon R7xx \"GX2\"\n\n  mem -- gx\n  mem -- radeon\n\n  rom -- mem\n\n  mem -- sata\n  mem -- exi\n\n  dram -- sata\n  dram -- exi\n}\n\nddr3: 2 GB DDR3 RAM \"MEM2\"\n\namd.mem -- ddr3\namd.dram -- ddr3\namd.edram -- ddr3\n\nibm.core1 -- amd.mem\n\namd.exi -- RTC\n",
+		"name": "Hardware Component Diagram",
+		"category": "Containers"
+	},
+	{
+		"filename": "globs-filter-2",
+		"script": "the-little-cannon: {\n  class: [server; deployed]\n}\ndino: {\n  class: [internal; deployed]\n}\ncatapult: {\n  class: [server]\n}\n\n*: {\n  &class: server\n  style.multiple: true\n}\n",
+		"name": "Glob Filtering by Class",
+		"category": "Globs"
+	},
+	{
+		"filename": "styles-base",
+		"script": "direction: right\nx -> y: hi\n",
+		"name": "Basic Direction",
+		"category": "Layout"
+	},
+	{
+		"filename": "styles-3d",
+		"script": "direction: right\nx -> y: hi\nx.style.3d: true\n",
+		"name": "3D Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "tables-2",
+		"script": "objects: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  disk: int {constraint: foreign_key}\n\n  json: jsonb {constraint: unique}\n  last_updated: timestamp with time zone\n}\n\ndisks: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n}\n\nobjects.disk -> disks.id\n",
+		"name": "SQL Tables with Foreign Key",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "sequence-diagrams-1",
+		"script": "shape: sequence_diagram\nalice -> bob: What does it mean\\nto be well-adjusted?\nbob -> alice: The ability to play bridge or\\ngolf as if they were games.\n",
+		"name": "Basic Sequence Diagram",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "markdown",
+		"script": "explanation: |md\n  # I can do headers\n  - lists\n  - lists\n\n  And other normal markdown stuff\n|\n",
+		"name": "Markdown Content",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "globs-casing",
+		"script": "diddy kong\nDonkey Kong\n\n*kong.style.fill: brown\n",
+		"name": "Glob Case Insensitivity",
+		"category": "Globs"
+	},
+	{
+		"filename": "globs-indexed-connections",
+		"script": "lady 1\nlady 2\n\nbarbie\n\nlady 1 -> barbie: hi barbie\nlady 2 -> barbie: hi barbie\n\n(lady* -> barbie)[*].style.stroke: pink\n",
+		"name": "Indexed Connection Glob Styling",
+		"category": "Globs"
+	},
+	{
+		"filename": "multiple-classes",
+		"script": "classes: {\n  d2: {\n    label: \"\"\n    icon: https://play.d2lang.com/assets/icons/d2-logo.svg\n  }\n  sphere: {\n    shape: circle\n    style.stroke-width: 0\n  }\n}\n\nlogo.class: [d2; sphere]\n",
+		"name": "Multiple CSS-like Classes",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "shapes-1",
+		"script": "imAShape\nim_a_shape\nim a shape\ni'm a shape\n# notice that one-hyphen is not a connection\n# whereas, `a--shape` would be a connection\na-shape\n",
+		"name": "Shape Declaration Syntax",
+		"category": "Basics"
+	},
+	{
+		"filename": "tiktok",
+		"script": "explain: |md\n  This is the top layer, highest level of abstraction.\n| {\n  near: top-center\n}\n\nTik Tok's User Data: {\n  link: layers.tiktok\n}\n\nlayers: {\n  tiktok: {\n    explain: |md\n      One layer deeper:\n\n      Tik Tok's CEO explained that user data is stored in two places currently.\n    | {\n      near: top-center\n    }\n    Virginia data center <-> Hong Kong data center\n    Virginia data center.link: layers.virginia\n    Hong Kong data center.link: layers.hongkong\n    \n    layers: {\n      virginia: {\n        direction: right\n        explain: |md\n          Getting deeper into details:\n\n          TikTok's CEO explains that Virginia data center has strict security measures.\n        | {\n          near: top-center\n        }\n        Oracle Databases: {\n          shape: cylinder\n          style.multiple: true\n        }\n        US residents -> Oracle Databases: access\n        US residents: {\n          shape: person\n        }\n        Third party auditors -> Oracle Databases: verify\n      }\n      hongkong: {\n        direction: right\n        explain: |md\n          TikTok's CEO says data is actively being deleted and should be done by the end of the year.\n        | {\n          near: top-center\n        }\n        Legacy Databases: {\n          shape: cylinder\n          style.multiple: true\n        }\n      }\n    }\n  }\n}\n",
+		"name": "Layered Diagram (TikTok Example)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sample2",
+		"script": "logs: {\n  shape: page\n  style.multiple: true\n}\nuser: AT&T Customer {shape: person}\nnetwork: Network {\n  tower: Cell Tower {\n    satellites: {\n      shape: stored_data\n      style.multiple: true\n    }\n    transmitter\n\n    satellites -> transmitter\n    satellites -> transmitter\n    satellites -> transmitter\n  }\n  processor: Data Processor {\n    storage: Storage {\n      shape: cylinder\n      style.multiple: true\n    }\n  }\n  portal: Online Portal {\n    UI\n  }\n\n  tower.transmitter -> processor: phone logs\n}\nserver: API Server\n\nuser -> network.tower: Make call\nnetwork.processor -> server\nnetwork.processor -> server\nnetwork.processor -> server\n\nserver -> logs\nserver -> logs\nserver -> logs: persist\n\nserver -> network.portal.UI: display\nuser -> network.portal.UI: access {\n  style.stroke-dash: 3\n}\n",
+		"name": "Network Diagram Example",
+		"category": "Containers"
+	},
+	{
+		"filename": "serviceB",
+		"script": "aws vault: {\n  key\n  token\n}\nstripe: {\n  customer id\n}\naws vault.key -> data\naws vault.token -> data\nstripe.customer id -> data\ndata.link: layers.data\n\nlayers: {\n  data: @data\n}\n",
+		"name": "Simple Layered Service",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "globs-filter-glob-value",
+		"script": "*: {\n  &link: *\n  style.fill: red\n}\n\nx.link: https://google.com\ny\n",
+		"name": "Glob Filtering by Attribute Value",
+		"category": "Globs"
+	},
+	{
+		"filename": "grid-unaligned",
+		"script": "grid-columns: 1\nus-east-1: {\n  grid-rows: 1\n  a\n  b\n  c\n  d\n  e\n}\n\nus-west-1: {\n  grid-rows: 1\n  a\n}\n\nus-east-1.c -> us-west-1.a\n",
+		"name": "Unaligned Grid Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "vars-spread",
+		"script": "vars: {\n  base-constraints: [NOT NULL; UNQ]\n  disclaimer: DISCLAIMER {\n    I am not a lawyer\n    near: top-center\n  }\n}\n\ndata: {\n  shape: sql_table\n  a: int {constraint: [PK; ...${base-constraints}]}\n}\n\ncustom-disclaimer: DRAFT DISCLAIMER {\n  ...${disclaimer}\n}\n",
+		"name": "Variable Spreading",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "hello-world",
+		"script": "x -> y: hello world\n",
+		"name": "Hello World",
+		"category": "Basics"
+	},
+	{
+		"filename": "imports-targeted",
+		"script": "...@people.management\njoe -> donuts: loves\njan -> donuts: brings\n",
+		"name": "Targeted Import",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "overrides-2",
+		"script": "aws_s3: AWS S3 California {\n  Monitoring -> California\n}\naws_s3: \"AWS S3 San Francisco, California\" {\n  California.San Francisco\n}\n\n# Equal to:\n# aws_s3: \"AWS S3 San Francisco, California\" {\n#   Monitoring -> California\n#   California.San Francisco\n# }\n",
+		"name": "Shape Attribute Overrides",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "grid-4",
+		"script": "grid-rows: 2\ngrid-columns: 2\nExecutive\nLegislative\nJudicial\n",
+		"name": "Simple Grid Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "suspend",
+		"script": "# -----\n# Models\n# -----\nrestaurants: Restaurants {\n  style.stroke-dash: 2\n  *.style.fill: \"#66c4e3\"\n  chip: Chipotle\n  cfa: Chick-Fil-A\n  bk: Burger King\n\n  chip -> bk: competes with\n}\n\ndiners: Diners {\n  daniel\n  zack\n}\n\n# -----\n# Model Relationships\n# -----\ndiners -> restaurants: eat at\n\ndiners.daniel -> restaurants.chip: likes\ndiners.daniel -> restaurants.cfa: dislikes\n\ndiners.zack -> restaurants.bk: likes\ndiners.zack -> restaurants.chip: likes\n",
+		"name": "Diagram Models Setup",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "styles-root",
+		"script": "direction: right\nx -> y: hi\nstyle: {\n  fill: LightBlue\n  stroke: FireBrick\n  stroke-width: 2\n}\n",
+		"name": "Root Level Styling",
+		"category": "Styling"
+	},
+	{
+		"filename": "imports-vv-history",
+		"script": "direction: right\nUsers 1: Users Table (v0.1) {\n  ...@\"users-v0.1\"\n}\n\nUsers 2: Users Table (current) {\n  ...@users-current\n}\n\nUsers 1 -> Users 2\n",
+		"name": "Versioned Component Imports",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "styles-opacity",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    opacity: 0.4\n  }\n}\nx.style.opacity: 0\ny.style.opacity: 0.7\n",
+		"name": "Opacity Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "globs-recursive",
+		"script": "a: {\n  b: {\n    c\n  }\n}\n\n**.style.border-radius: 7\n",
+		"name": "Recursive Glob Styling",
+		"category": "Globs"
+	},
+	{
+		"filename": "sample3",
+		"script": "SSR: Server side render {\n  templates: User defined templates\n\n  tests: Validation tests\n\n  engine: Rendering Engine\\n API {\n    ingestion: Ingestion module {\n      shape: hexagon\n    }\n    fetch: Data fetching module {\n      shape: hexagon\n    }\n    schema: Schema version module {\n      shape: hexagon\n    }\n  }\n  next: NextJS\n  db: Data\n\n  templates -> engine.ingestion\n  engine.fetch <-> db: Integrate user data\n  engine.schema <-> db: Get version\n\n  engine <-> tests\n}\n\nbuild: Final build {\n  html: Rendered HTML\n}\n\nSSR.engine -> SSR.next -> build.html\n",
+		"name": "SSR Architecture",
+		"category": "Containers"
+	},
+	{
+		"filename": "styles-multiple",
+		"script": "direction: right\nx -> y: hi\nx.style.multiple: true\n",
+		"name": "Multiple Style (Stacking Effect)",
+		"category": "Styling"
+	},
+	{
+		"filename": "strings-1",
+		"script": "Office Bulb: Philips\nSwitch -> Office Bulb\n",
+		"name": "Simple String Labels",
+		"category": "Basics"
+	},
+	{
+		"filename": "sequence-diagrams-4",
+		"script": "shape: sequence_diagram\nscorer: {shape: person}\nscorer.t -> itemResponse.t: getItem()\nscorer.t <- itemResponse.t: item {\n  style.stroke-dash: 5\n}\n\nscorer.t -> item.t1: getRubric()\nscorer.t <- item.t1: rubric {\n  style.stroke-dash: 5\n}\n\nscorer.t -> essayRubric.t: applyTo(essayResp)\nitemResponse -> essayRubric.t.c\nessayRubric.t.c -> concept.t: match(essayResponse)\nscorer <- essayRubric.t: score {\n  style.stroke-dash: 5\n}\n\nscorer.t -> itemOutcome.t1: new\nscorer.t -> item.t2: getNormalMinimum()\nscorer.t -> item.t3: getNormalMaximum()\n\nscorer.t -> itemOutcome.t2: setScore(score)\nscorer.t -> itemOutcome.t3: setFeedback(missingConcepts)\n",
+		"name": "Sequence Diagram Lifelines",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "styles-stroke-width",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    stroke-width: 8\n  }\n}\nx.style.stroke-width: 1\n",
+		"name": "Stroke Width Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "pill",
+		"script": "tylenol.style.border-radius: 999\n",
+		"name": "Pill Shape (Border Radius)",
+		"category": "Styling"
+	},
+	{
+		"filename": "containers-3",
+		"script": "clouds: {\n  aws: AWS {\n    load_balancer -> api\n    api -> db\n  }\n  gcloud: Google Cloud {\n    auth -> db\n  }\n\n  gcloud -> aws\n}\n\nusers -> clouds.aws.load_balancer\nusers -> clouds.gcloud.auth\n\nci.deploys -> clouds\n",
+		"name": "Containers with External Connections",
+		"category": "Containers"
+	},
+	{
+		"filename": "styles-shadow",
+		"script": "direction: right\nx -> y: hi\nx.style.shadow: true\n",
+		"name": "Shadow Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "vars-intro",
+		"script": "direction: right\nvars: {\n  server-name: Cat\n}\n\nserver1: ${server-name}-1\nserver2: ${server-name}-2\n\nserver1 <-> server2\n",
+		"name": "Basic Variables",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "null-attribute",
+		"script": "one: {\n  style: {\n    fill: pink\n    stroke: green\n  }\n}\n\none.style.stroke: null\n",
+		"name": "Nullifying Attributes",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "classes-2",
+		"script": "D2 Parser: {\n  shape: class\n\n  # Default visibility is + so no need to specify.\n  +reader: io.RuneReader\n  readerPos: d2ast.Position\n\n  # Private field.\n  -lookahead: \"[]rune\"\n\n  # Protected field.\n  # We have to escape the # to prevent the line from being parsed as a comment.\n  \\#lookaheadPos: d2ast.Position\n\n  +peek(): (r rune, eof bool)\n  rewind()\n  commit()\n\n  \\#peekn(n int): (s string, eof bool)\n}\n\n\"github.com/terrastruct/d2parser.git\" -> D2 Parser\n",
+		"name": "Class Diagram Visibility",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "globs-filter-3",
+		"script": "**: {\n  &connected: true\n  style.fill: yellow\n}\n\n**: {\n  &leaf: true\n  style.stroke: red\n}\n\ncontainer: {\n  a -> b\n}\nc\n",
+		"name": "Glob Filtering by Connection Status",
+		"category": "Globs"
+	},
+	{
+		"filename": "suspend-4",
+		"script": "# -----\n# Models\n# -----\nrestaurants: Restaurants {\n  style.stroke-dash: 2\n  *.style.fill: \"#66c4e3\"\n  chip: Chipotle\n  cfa: Chick-Fil-A\n  bk: Burger King\n\n  chip -> bk: competes with\n}\n\ndiners: Diners {\n  daniel\n  zack\n}\n\n# -----\n# Model Relationships\n# -----\ndiners -> restaurants: eat at\n\ndiners.daniel -> restaurants.chip: likes\ndiners.daniel -> restaurants.cfa: dislikes\n\ndiners.zack -> restaurants.bk: likes\ndiners.zack -> restaurants.chip: likes\n\n# Treat the above as models\n**: suspend\n(** -> **)[*]: suspend\n\n# Display only who likes what\n(** -> **)[*]: unsuspend {\n  &label: likes\n}\n",
+		"name": "Filtering Connections (Suspend/Unsuspend)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "tables-3",
+		"script": "cloud: {\n  disks: {\n    shape: sql_table\n    id: int {constraint: primary_key}\n  }\n  blocks: {\n    shape: sql_table\n    id: int {constraint: primary_key}\n    disk: int {constraint: foreign_key}\n    blob: blob\n  }\n  blocks.disk -> disks.id\n\n  AWS S3 Vancouver -> disks\n}\n",
+		"name": "SQL Tables in Container",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "people",
+		"script": "management: {\n  joe: {\n    shape: person\n    label: Joe Donutlover\n  }\n  jan: {\n    shape: person\n    label: Jan Donutbaker\n  }\n}\n# Notice how these do not appear in the rendered diagram\nemployees: {\n  toby: {\n    shape: person\n    label: Toby Simonton\n  }\n}\n",
+		"name": "Defining Shapes in Containers",
+		"category": "Containers"
+	},
+	{
+		"filename": "styles-text-transform",
+		"script": "direction: right\nTOM -> jerry: hi {\n  style: {\n    text-transform: capitalize\n  }\n}\nTOM.style.text-transform: lowercase\njerry.style.text-transform: uppercase\n",
+		"name": "Text Transform Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "globs-recursive-2",
+		"script": "zone-A: {\n  machine A\n  machine B: {\n    submachine A\n    submachine B\n  }\n}\n\nzone-A.** -> load balancer\n",
+		"name": "Recursive Glob Connections",
+		"category": "Globs"
+	},
+	{
+		"filename": "lotr",
+		"script": "The shire\n\njourney: {\n  link: layers.rivendell\n}\n\nlayers: {\n  rivendell: {\n    elves: {\n      elrond -> frodo: gives advice\n    }\n\n    take me home sam.link: _\n    go deeper: {\n      link: layers.moria\n    }\n    \n    layers: {\n      moria: {\n        dwarves\n\n        take me home sam.link: _._\n      }\n    }\n  }\n}\n",
+		"name": "Nested Layers (LOTR Example)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "near-constant",
+		"script": "title: |md\n  # A winning strategy\n| {near: top-center}\n\npoll the people -> results\nresults -> unfavorable -> poll the people\nresults -> favorable -> will of the people\n",
+		"name": "Positioning with `near`",
+		"category": "Layout"
+	},
+	{
+		"filename": "direction-right",
+		"script": "direction: right\nx -> y -> z: hello\n",
+		"name": "Right Direction Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "styles-text-decoration",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    bold: true\n  }\n}\nx.style.underline: true\ny.style.italic: true\n# By default, shape labels are bold. Bold has precedence over italic, so unbold to see\n# italic style\ny.style.bold: false\n",
+		"name": "Text Decoration Styles",
+		"category": "Styling"
+	},
+	{
+		"filename": "globs-filter",
+		"script": "bravo team.shape: person\ncharlie team.shape: person\ncommand center.shape: cloud\nhq.shape: rectangle\n\n*: {\n  &shape: person\n  style.multiple: true\n}\n",
+		"name": "Glob Filtering by Shape Type",
+		"category": "Globs"
+	},
+	{
+		"filename": "near-container",
+		"script": "direction: right\n\nx -> y: {\n  style.stroke: green\n}\n\ny -> z: {\n  style.stroke: red\n}\n\nlegend: {\n  near: bottom-center\n  color1: foo {\n    shape: text\n    style.font-color: green\n  }\n\n  color2: bar {\n    shape: text\n    style.font-color: red\n  }\n}\n",
+		"name": "Positioning Container with `near`",
+		"category": "Layout"
+	},
+	{
+		"filename": "connections-3",
+		"script": "# The label applies to each connection in the chain.\nHigh Mem Instance -> EC2 <- High CPU Instance: Hosted By\n",
+		"name": "Connection Chain Label",
+		"category": "Connections"
+	},
+	{
+		"filename": "grid-aligned",
+		"script": "classes: {\n  invisible: {\n    style.opacity: 0\n    label: a\n  }\n}\n\ngrid-columns: 1\nus-east-1: {\n  grid-rows: 1\n  a\n  b\n  c\n  d\n  e\n}\n\nus-west-1: {\n  grid-rows: 1\n  pad1.class: invisible\n  pad2.class: invisible\n  a\n  # Move the label so it doesn't go through the connection\n  label.near: bottom-center\n}\n\nus-east-1.c -> us-west-1.a\n",
+		"name": "Grid Alignment with Padding",
+		"category": "Layout"
+	},
+	{
+		"filename": "imports-normal",
+		"script": "a: @imports-normal-x\na -> b\n",
+		"name": "Basic Import",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "grid-fill",
+		"script": "grid-rows: 3\nExecutive\nLegislative\nJudicial\nThe American Government.width: 400\nVoters\nNon-voters\n",
+		"name": "Grid Fill Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "chicken",
+		"script": "Chicken's plan: {\n  style.font-size: 35\n  near: top-center\n  shape: text\n}\n\nsteps: {\n  1: {\n    Approach road\n  }\n  2: {\n    Approach road -> Cross road\n  }\n  3: {\n    Cross road -> Make you wonder why\n  }\n}\n",
+		"name": "Sequential Steps Diagram",
+		"category": "Containers"
+	},
+	{
+		"filename": "cult",
+		"script": "text: |md\n  # Introduction\n\n  ## How to start a cult\n\n  This presentation educates the public on starting a cult\n\n  This is an abridged presentation\n|\n\nlayers: {\n  1: {\n    text: |md\n      # What is a cult?\n      - *Definition*: A group or movement with a shared devotion to a charismatic leader, an ideology, or a set of rituals and beliefs\n      - *Characteristics*: Totalitarian control, manipulative practices, and exploitation of members\n    |\n  }\n  2: {\n    text: |md\n      # Charismatic Leader\n\n      ## Role\n\n      Cult leaders have a strong, magnetic personality, and are typically seen as an authority figure\n\n      ## Tips:\n\n      - Cultivate a unique and compelling persona\n      - Be convincing and persuasive\n      - Establish yourself as an authority figure with exclusive knowledge or abilities\n    |\n  }\n  3: {\n    text: |md\n      # Recruitment\n      - *Importance*: New members are vital for the growth and sustainability of a cult\n      - *Methods*: Targeting vulnerable individuals, offering solutions to personal problems, and using social pressure\n    |\n  }\n  4: {\n    text: |md\n      # Control and manipulation\n\n      ## Purpose\n      To maintain power over members and ensure loyalty\n\n      ## Techniques\n      Information control, emotional manipulation, and behavior control\n\n      ## Tips:\n\n      - Limit members' access to outside information and discourage critical thinking\n      - Use guilt, shame, and fear to manipulate members' emotions\n      - Create strict rules and rituals to control behavior\n    |\n  }\n  5: {\n    text: |md\n      # Enjoy your cult\n    |\n  }\n}\n",
+		"name": "Layered Markdown Presentation (Cult Example)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "code-2",
+		"script": "explanation: |go\n  awsSession := From(c.Request.Context())\n  client := s3.New(awsSession)\n\n  ctx, cancelFn := context.WithTimeout(c.Request.Context(), AWS_TIMEOUT)\n  defer cancelFn()\n|\n",
+		"name": "Go Code Block",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "near-label-icon",
+		"script": "direction: right\nx -> y\n\nx: worker {\n  label.near: top-center\n  icon: https://icons.terrastruct.com/essentials%2F005-programmer.svg\n  icon.near: outside-top-right\n}\n\ny: profits {\n  label.near: bottom-right\n  icon: https://icons.terrastruct.com/essentials%2Fprofits.svg\n  icon.near: outside-top-left\n}\n",
+		"name": "Label and Icon Positioning (`near`)",
+		"category": "Layout"
+	},
+	{
+		"filename": "johnwick",
+		"script": "shape: sequence_diagram\n\njohn wick\nhenchman 1\nhenchman 2\nbig boss\n\nsteps: {\n  1: {\n    henchman 1 -> john wick: shoots, misses\n  }\n  2: {\n    john wick -> henchman 1: shoots, hits\n    henchman 1.style.fill: \"#FFCCCB\"\n  }\n  3: {\n    henchman 2 -> john wick: shoots, misses\n  }\n  4: {\n    john wick -> henchman 2: shoots, hits\n    henchman 2.style.fill: \"#FFCCCB\"\n  }\n  5: {\n    big boss -> john wick: injures\n  }\n  6: {\n    john wick -> big boss: shoots, hits\n    big boss.style.fill: \"#FFCCCB\"\n  }\n}\n",
+		"name": "Sequence Diagram Steps (John Wick)",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "styles-font-color",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    font-color: red\n  }\n}\nx.style.font-color: \"#f4a261\"\n",
+		"name": "Font Color Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "vars-nested",
+		"script": "vars: {\n  primaryColors: {\n    button: {\n      active: \"#4baae5\"\n      border: black\n    }\n  }\n}\n\nbutton: {\n  width: 100\n  height: 40\n  style: {\n    border-radius: 5\n    fill: ${primaryColors.button.active}\n    stroke: ${primaryColors.button.border}\n  }\n}\n",
+		"name": "Nested Variables",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "data",
+		"script": "users: {\n  shape: sql_table\n  id: int\n  token: string\n  customer_id: string\n}\n\n# Continue nesting as needed!\n# layers: {\n#   ...\n# }\n",
+		"name": "SQL Table Definition (for import)",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "theme-table",
+		"script": "vars: {\n  d2-config: {\n    theme-id: 6\n  }\n}\n\ndirection: right\n\ncostumes: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  silliness: int\n  monster: int\n  last_updated: timestamp\n}\n\nmonsters: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  movie: string\n  weight: int\n  last_updated: timestamp\n}\n\ncostumes.monster -> monsters.id\n",
+		"name": "SQL Tables with Theme",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "styles-animated",
+		"script": "direction: right\nx -> y: hi {\n  style.animated: true\n}\nx.style.animated: true\n",
+		"name": "Animated Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "md-table",
+		"script": "savings: ||md\n  | Month    | Savings | Expenses | Balance |\n  | -------- | ------- | -------- | ------- |\n  | January  | $250    | $150     | $100    |\n  | February | $80     | $200     | -$120   |\n  | March    | $420    | $180     | $240    |\n||\n",
+		"name": "Markdown Table",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "styles-fill-transparent",
+		"script": "x: {\n  y\n  y.style.fill: transparent\n}\nx.style.fill: PapayaWhip\n",
+		"name": "Transparent Fill Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "classes",
+		"script": "classes: {\n  base: {\n    style: {\n      border-radius: 4\n      shadow: true\n    }\n  }\n  error: {\n    style.fill: pink\n    style.stroke: red\n  }\n  med: {\n    width: 200\n    height: 200\n    style.font-size: 24\n  }\n  large: {\n    width: 300\n    height: 300\n    style.font-size: 28\n  }\n  xlarge: {\n    width: 400\n    height: 400\n    style.font-size: 32\n  }\n  person: {\n    shape: person\n    style.stroke-dash: 3\n  }\n}\n",
+		"name": "Defining Reusable Classes",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "legend-hidden",
+		"script": "vars: {\n  d2-legend: {\n    a <-> b: Good relationship {\n      style.stroke: red\n      style.stroke-dash: 2\n    }\n    a.style.opacity: 0\n    b.style.opacity: 0\n  }\n}\n\napi-1 <-> api-2: {\n  style.stroke: red\n  style.stroke-dash: 2\n}\napi-1 -> api-3: {\n  target-arrowhead.shape: circle\n}\n",
+		"name": "Legend with Hidden Elements",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "styles-table-fill",
+		"script": "direction: right\ncostumes: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  silliness: int\n  last_updated: timestamp\n  style.fill: \"#329241\"\n}\n\nparser: {\n  shape: class\n  -lookahead: \"[]rune\"\n  +peek(): (r rune, eof bool)\n  rewind()\n  commit()\n  style.fill: \"#329241\"\n}\n\ncostumes -> parser\n",
+		"name": "Table/Class Fill Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "icons-image",
+		"script": "direction: right\nserver: {\n  shape: image\n  icon: https://icons.terrastruct.com/tech/022-server.svg\n}\n\ngithub: {\n  shape: image\n  icon: https://icons.terrastruct.com/dev/github.svg\n}\n\nserver -> github\n",
+		"name": "Image Shape with Icons",
+		"category": "Icons & Images"
+	},
+	{
+		"filename": "table",
+		"script": "# Specified so that objects are written in row-dominant order\ngrid-rows: 2\ngrid-columns: 4\ngrid-gap: 0\n\nclasses: {\n  header: {\n    style.underline: true\n  }\n}\n\nElement.class: header\nAtomic Number.class: header\nAtomic Mass.class: header\nMelting Point.class: header\n\nHydrogen\n1\n\"1.008\"\n\"-259.16\"\n\nCarbon\n6\n\"12.011\"\n3500\n\nOxygen\n8\n\"15.999\"\n\"-218.79\"\n",
+		"name": "Text Table using Grid",
+		"category": "Layout"
+	},
+	{
+		"filename": "connections-2",
+		"script": "Database -> S3: backup\nDatabase -> S3\nDatabase -> S3: backup\n",
+		"name": "Multiple Connections",
+		"category": "Connections"
+	},
+	{
+		"filename": "grid-column-dominant",
+		"script": "grid-columns: 2\ngrid-rows: 4\n\na\n\nsteps: {\n  1: {\n    b\n  }\n  2: {\n    c\n  }\n  3: {\n    d\n  }\n  4: {\n    e\n  }\n  5: {\n    f\n  }\n  6: {\n    g\n  }\n  7: {\n    h\n  }\n}\n",
+		"name": "Column-Dominant Grid Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "latex",
+		"script": "grid-columns: 3\ngrid-gap: 100\n\n*.style.fill: transparent\n*.style.stroke: black\n\namscd plugin: {\n  ex: |tex\n    \\begin{CD} B @>{\\text{very long label}}>> C S^{{\\mathcal{W}}_\\Lambda}\\otimes T @>j>> T\\\\ @VVV V \\end{CD}\n  |\n}\n\nbraket plugin: {\n  ex: |tex\n    \\bra{a}\\ket{b}\n  |\n}\n\ncancel plugin: {\n  ex: |tex\n    \\cancel{Culture + 5}\n  |\n}\n\ncolor plugin: {\n  ex: |tex\n    \\textcolor{red}{y} = \\textcolor{green}{\\sin} x\n  |\n}\n\ngensymb plugin: {\n  ex: |tex\n    \\lambda = 10.6\\,\\micro\\mathrm{m}\n  |\n}\n\nmhchem plugin: {\n  ex: |tex\n    \\ce{SO4^2- + Ba^2+ -> BaSO4 v}\n  |\n}\n\nphysics plugin: {\n  ex: |tex\n    \\var{F[g(x)]}\n    \\dd(\\cos\\theta)\n  |\n}\n\nmultilines: {\n  ex: |tex\n    \\displaylines{x = a + b \\\\ y = b + c}\n    \\sum_{k=1}^{n} h_{k} \\int_{0}^{1} \\bigl(\\partial_{k} f(x_{k-1}+t h_{k} e_{k}) -\\partial_{k} f(a)\\bigr) \\,dt\n  |\n}\n\nasm: {\n  ex: |latex\n    \\min_{ \\mathclap{\\substack{ x \\in \\mathbb{R}^n \\ x \\geq 0 \\ Ax \\leq b }}} c^T x\n  |\n}\n",
+		"name": "LaTeX Rendering",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "grid-dimensions",
+		"script": "grid-rows: 2\nExecutive\nLegislative\nJudicial\nThe American Government.width: 400\n",
+		"name": "Grid Shape Dimensions",
+		"category": "Layout"
+	},
+	{
+		"filename": "direction-up",
+		"script": "direction: up\nx -> y -> z: hello\n",
+		"name": "Up Direction Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "styles-stroke-dash",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    stroke-dash: 3\n  }\n}\nx.style.stroke-dash: 5\n",
+		"name": "Stroke Dash Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "main",
+		"script": "direction: right\n\nProcessing Pipeline: {\n  shape: text\n  style.font-size: 55\n  near: top-center\n}\n\nPreprocessing: {\n  icon: https://icons.terrastruct.com/azure%2FDatabases%20Service%20Color%2FAzure%20SQL%20DataWarehouse.svg\n}\n\ngpu: Multi-GPU\\nTraining {\n  icon: https://icons.terrastruct.com/aws%2FRobotics%2FRobotics.svg\n}\n\nEval: {\n  icon: https://icons.terrastruct.com/essentials%2F110-zoom%20in.svg\n}\n\nInference: {\n  icon: https://icons.terrastruct.com/essentials%2F005-programmer.svg\n}\n\nOrchestrator: {\n  pipeline: Full working\\npipeline {\n    shape: queue\n  }\n}\n\nPreprocessing -> Orchestrator.pipeline\ngpu -> Orchestrator.pipeline\nEval -> Orchestrator.pipeline\nInference -> Orchestrator.pipeline\n\nOrchestrator -> Data Warehouse\n\nData Warehouse: {\n  Primary: {\n    shape: cylinder\n  }\n  Secondary: {\n    shape: cylinder\n  }\n  style: {\n    fill: \"#fdfbe3\"\n  }\n}\n\n\"Note: we can replace the orchestrator with Kubernetes when we run out of things to do\": {\n  style.fill: \"#056C4E\"\n  style.font-color: white\n  style.stroke-width: 0\n  width: 800\n  near: bottom-center\n}\n",
+		"name": "Processing Pipeline Example",
+		"category": "Containers"
+	},
+	{
+		"filename": "grid-padding-1",
+		"script": "classes: {\n  kuber: {\n    style: {\n      fill: \"white\"\n      stroke: \"#aeb5bd\"\n      border-radius: 4\n      stroke-dash: 3\n    }\n  }\n  sys: {\n    label: \"\"\n    style: {\n      fill: \"#AFBFDF\"\n      stroke: \"#aeb5bd\"\n    }\n  }\n  node: {\n    grid-gap: 0\n    style: {\n      fill: \"#ebf3e6\"\n      border-radius: 8\n      stroke: \"#aeb5bd\"\n    }\n  }\n  clust: {\n    style: {\n      fill: \"#A7CC9E\"\n      stroke: \"#aeb5bd\"\n    }\n  }\n  deploy: {\n    grid-gap: 0\n    style: {\n      fill: \"#ffe6d5\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n  nextpod: {\n    icon: https://www.svgrepo.com/show/378440/nextjs-fill.svg\n    style: {\n      fill: \"#ECECEC\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n  flaskpod: {\n    icon: https://www.svgrepo.com/show/508915/flask.svg\n    style: {\n      fill: \"#ECECEC\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n}\n\nclasses\n\nKubernetes: {\n  grid-columns: 2\n  system: {\n    grid-columns: 1\n    Backend Node: {\n      grid-columns: 2\n      ClusterIP\\nService 1\n      Deployment 1: {\n        grid-rows: 3\n        NEXT POD 1\n        NEXT POD 2\n        NEXT POD 3\n      }\n    }\n    Frontend Node: {\n      grid-columns: 2\n      ClusterIP\\nService 2\n      Deployment 2: {\n        grid-rows: 3\n        FLASK POD 1\n        FLASK POD 2\n        FLASK POD 3\n      }\n    }\n  }\n}\n\nkubernetes.class: kuber\nkubernetes.system.class: sys\n\nkubernetes.system.backend node.class: node\nkubernetes.system.backend node.clusterip\\nservice 1.class: clust\nkubernetes.system.backend node.deployment 1.class: deploy\nkubernetes.system.backend node.deployment 1.next pod*.class: nextpod\n\nkubernetes.system.frontend node.class: node\nkubernetes.system.frontend node.clusterip\\nservice 2.class: clust\nkubernetes.system.frontend node.deployment 2.class: deploy\nkubernetes.system.frontend node.deployment 2.flask pod*.class: flaskpod\n",
+		"name": "Kubernetes Grid Layout (Basic Padding)",
+		"category": "Layout"
+	},
+	{
+		"filename": "styles-fill-pattern",
+		"script": "direction: right\nstyle.fill-pattern: dots\nx -> y: hi\nx.style.fill-pattern: lines\ny.style.fill-pattern: grain\n",
+		"name": "Fill Pattern Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "style-classes-2",
+		"script": "classes: {\n  unhealthy: {\n    style.fill: red\n  }\n}\nx.class: unhealthy\nx.style.fill: orange\n",
+		"name": "Overriding Class Styles",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "imports-mv-access-view",
+		"script": "...@models\nit -> vpn -> postgres\n",
+		"name": "Importing and Connecting Models (Access View)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "animated",
+		"script": "vars: {\n  d2-config: {\n    sketch: true\n  }\n}\nwinter.snow -> summer.sun -> trees -> winter.snow: {style.animated: true}\n",
+		"name": "Sketch Mode Animation",
+		"category": "Styling"
+	},
+	{
+		"filename": "connections-5",
+		"script": "a: The best way to avoid responsibility is to say, \"I've got responsibilities\"\nb: Whether weary or unweary, O man, do not rest\nc: I still maintain the point that designing a monolithic kernel in 1991 is a\n\na -> b: To err is human, to moo bovine {\n  source-arrowhead: 1\n  target-arrowhead: * {\n    shape: diamond\n  }\n}\n\nb <-> c: \"Reality is just a crutch for people who can't handle science fiction\" {\n  source-arrowhead.label: 1\n  target-arrowhead: * {\n    shape: diamond\n    style.filled: true\n  }\n}\n\nd: A black cat crossing your path signifies that the animal is going somewhere\n\nd -> a -> c\n",
+		"name": "Custom Connection Arrowheads",
+		"category": "Connections"
+	},
+	{
+		"filename": "users-current",
+		"script": "users: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  email: int {constraint: foreign_key}\n  name: string\n  password: text\n  created_at: timestamp\n  last_updated: timestamp\n}\n\nemails: {\n  shape: sql_table\n  id: int {constraint: [primary_key; unique]}\n  local: string\n  domain: string\n  verified: boolean\n}\nusers.email -> emails.id\n",
+		"name": "SQL Table Definitions (for import)",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "styles-double-border",
+		"script": "direction: right\nx -> y: hi\nx.style.double-border: true\ny.shape: circle\ny.style.double-border: true\n",
+		"name": "Double Border Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "vars-config",
+		"script": "vars: {\n  d2-config: {\n    theme-id: 4\n    dark-theme-id: 200\n    pad: 0\n    center: true\n    sketch: true\n    layout-engine: elk\n  }\n}\n\ndirection: right\nx -> y\n",
+		"name": "Diagram Configuration (`d2-config`)",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "vars-escaped",
+		"script": "direction: right\nvars: {\n  names: John and Joyce\n}\na -> b: 'Send field ${names}'\n",
+		"name": "Escaped Variable Interpolation",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "imports-classes-main",
+		"script": "...@classes\nuser.class: person\nerror.class: [base; error]\nmodal.class: [base; med]\n\nuser -> app.signup: click\napp.signup -> error: invalid fields\napp.signup -> modal: continue registration\n",
+		"name": "Importing and Applying Classes",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "grid-nested-grid",
+		"script": "grid-gap: 0\ngrid-columns: 1\nheader\nbody: \"\" {\n  grid-gap: 0\n  grid-columns: 2\n  content\n  sidebar\n}\nfooter\n",
+		"name": "Nested Grid Layouts",
+		"category": "Layout"
+	},
+	{
+		"filename": "perma",
+		"script": "direction: down\n\ninput: |d2\n  # D2 script\n  hello -> world\n|\n\ninput -> compile -> objects\n\nobjects: {\n  custom styles\n}\n\nlight theme -> exporter.CSS generator\ndark theme -> exporter.CSS generator\n\nexporter\n\nexporter: {\n  renderer: set each fill\\naccording to color coding {\n    shape: oval\n  }\n\n  CSS generator: {\n    shape: oval\n  }\n\n  CSS generator -> css\n  css: |css\n    .fill-N1: {\n      fill: \"#000\"\n    }\n\n    @media (prefers-color-scheme: dark) {\n      .fill-N1: {\n        fill: \"#fff\"\n      }\n    }\n  |\n  renderer -> svg\n  svg: |html\n    <rect class=\"fill-N1\" ... />\n    <!-- If object has custom style, -->\n    <!-- style would be appended -->\n    <rect class=\"fill-N1\"\n      style=\"fill: red\" ... />\n\n  | {\n    height: 200\n  }\n}\n\nobjects.custom styles -> exporter.svg\n\nSVG file: {\n  shape: page\n}\n\nexporter.svg -> SVG file\nexporter.css -> SVG file\n\nstatic: This object doesn't change color,\\nbecause it has fill explicitly set {\n  style.fill: honeydew\n  style.font-color: black\n}\n",
+		"name": "CSS Theme Generation Explanation",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "grid-connections",
+		"script": "grid-rows: 4\ngrid-columns: 5\nhorizontal-gap: 20\nvertical-gap: 5\n\n*.class: [text; blue]\n\n0,0: {\n  label: \"npm i -g\\n@forge/cli\"\n  style: {\n    fill: \"#30304c\"\n    stroke: transparent\n    font-color: white\n    font: mono\n    font-size: 10\n    bold: false\n  }\n}\n0,1: {\n  label: \"Set up an\\nAtlassian site\"\n  class: [text; gray]\n}\n0,2.class: empty\n0,3: {\n  label: \"View the hello\\nworld app\"\n  class: [text; gray]\n}\n0,4: forge\\ntunnel\n\n1*.class: note\n1*.label: \"\"\n1,0\n1,1\n1,2\n1,3\n1,4\n\n2,0: forge\\nlogin\n2,1: forge\\ncreate\n2,2: forge\\ndeploy\n2,3: forge\\ninstall\n2,4: {\n  shape: diamond\n  label: \"Hot reload\\nchanges?\"\n  class: [text; gray]\n}\n\n3*.class: note\n3,0: Step 1\n3,1: Step 2\n3,2: Step 3\n3,3: Step 4\n3,4: \"\"\n\n4,0: \"\" {\n  grid-rows: 3\n  grid-columns: 1\n  grid-gap: 0\n\n  class: []\n\n  style: {\n    fill: transparent\n    stroke: transparent\n  }\n\n  *.style: {\n    fill: transparent\n    stroke: transparent\n    font-color: \"#30304c\"\n    font-size: 10\n    bold: false\n  }\n  *.label.near: center-left\n  *.height: 20\n  a: \u2b24 Forge CLI {\n    style.font-color: \"#0033cc\"\n  }\n\n  b: \u2b24 Required {\n    style.font-color: \"#30304c\"\n  }\n  c: \u2b24 Optional {\n    style.font-color: \"#cecece\"\n  }\n}\n4,1.class: empty\n4,2.class: empty\n4,3.class: empty\n4,4: forge\\ndeploy\n\n0,0 -> 2,0 -> 2,1 -> 2,2 -> 2,3 -> 2,4: {\n  class: arrow\n}\n2,1 -> 0,1: {\n  class: arrow\n  style.stroke: \"#cecece\"\n}\n2,3 -> 0,3: {\n  class: arrow\n  style.stroke: \"#cecece\"\n}\n2,4 -> 0,4: Yes {\n  class: arrow\n  style.font-size: 10\n}\n2,4 -> 4,4: No {\n  class: arrow\n  style.font-size: 10\n}\n\nclasses: {\n  text.style: {\n    stroke: transparent\n    font-color: white\n    font: mono\n    font-size: 10\n    bold: false\n  }\n  text: {\n    width: 100\n    height: 60\n  }\n  blue.style: {\n    fill: \"#0033cc\"\n    stroke: \"#0033cc\"\n    border-radius: 10\n  }\n  gray.style: {\n    fill: \"#cecece\"\n    stroke: \"#cecece\"\n    border-radius: 10\n  }\n  note: {\n    height: 30\n    label.near: top-center\n    style: {\n      font-size: 10\n      bold: false\n      fill: transparent\n      stroke: transparent\n    }\n  }\n  empty: {\n    label: \"\"\n    width: 50\n    height: 50\n    style: {\n      fill: transparent\n      stroke: transparent\n    }\n  }\n  arrow: {\n    target-arrowhead.shape: arrow\n    style: {\n      stroke: black\n      stroke-width: 2\n    }\n  }\n}\n",
+		"name": "Grid Layout with Connections",
+		"category": "Layout"
+	},
+	{
+		"filename": "globs-multiple",
+		"script": "teacher\nthriller\nthrifter\n\nt*h*r.shape: person\n",
+		"name": "Multi-Character Globs",
+		"category": "Globs"
+	},
+	{
+		"filename": "terminal-theme",
+		"script": "vars: {\n  d2-config: {\n    layout-engine: elk\n    # Terminal theme code\n    theme-id: 300\n  }\n}\nnetwork: {\n  cell tower: {\n    satellites: {\n      shape: stored_data\n      style.multiple: true\n    }\n\n    transmitter\n\n    satellites -> transmitter: send\n    satellites -> transmitter: send\n    satellites -> transmitter: send\n  }\n\n  online portal: {\n    ui: {shape: hexagon}\n  }\n\n  data processor: {\n    storage: {\n      shape: cylinder\n      style.multiple: true\n    }\n  }\n\n  cell tower.transmitter -> data processor.storage: phone logs\n}\n\nuser: {\n  shape: person\n  width: 130\n}\n\nuser -> network.cell tower: make call\nuser -> network.online portal.ui: access {\n  style.stroke-dash: 3\n}\n\napi server -> network.online portal.ui: display\napi server -> logs: persist\nlogs: {shape: page; style.multiple: true}\n\nnetwork.data processor -> api server\n",
+		"name": "Terminal Theme Example",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "non-markdown-text",
+		"script": "title: A winning strategy {\n  shape: text\n  near: top-center\n  style: {\n    font-size: 55\n    italic: true\n  }\n}\n\npoll the people -> results\nresults -> unfavorable -> poll the people\nresults -> favorable -> will of the people\n",
+		"name": "Styled Text Blocks (`shape: text`)",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "unicode",
+		"script": "a: |md\n  \u5e8a\u524d\u660e\u6708\u5149\uff0c\n\n  \u7591\u662f\u5730\u4e0a\u971c\u3002\n\n  \u4e3e\u5934\u671b\u660e\u6708\uff0c\n\n  \u4f4e\u5934\u601d\u6545\u4e61\u3002\n|\n\nb: \"\u30c8\u30de\u30c8\u304c\u8d64\u304f\u306a\u3063\u305f\u306e\u306f\u306a\u305c\u3067\u3059\u304b\uff1f\\nBecause it saw the salad dressing!\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc76\ud83d\udc69\u200d\ud83d\udc69\u200d\ud83d\udc67\u200d\ud83d\udc76\" {\n  style.font-size: 55\n}\n\nc: \u0eaa\u0eb0\u0e9a\u0eb2\u0e8d\u0e94\u0eb5 (sabaai dii) - Lao\nd: \u1787\u17c6\u179a\u17b6\u1794\u179f\u17bd\u179a (jomreab suor) - Khmer {\n  style.font-size: 43\n}\n\na -> b -> c\na -> d\n",
+		"name": "Unicode Characters",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "dimensions",
+		"script": "direction: right\n\nsmall jerry: \"\" {\n  shape: image\n  icon: https://static.wikia.nocookie.net/tomandjerry/images/4/46/JerryJumbo3-1-.jpg\n  width: 200\n  height: 200\n}\n\nmed jerry: \"\" {\n  shape: image\n  icon: https://static.wikia.nocookie.net/tomandjerry/images/4/46/JerryJumbo3-1-.jpg\n  width: 300\n  height: 300\n}\n\nbig jerry: \"\" {\n  shape: image\n  icon: https://static.wikia.nocookie.net/tomandjerry/images/4/46/JerryJumbo3-1-.jpg\n  width: 500\n  height: 400\n}\n\nbig jerry -> med jerry -> small jerry\n",
+		"name": "Shape Dimensions (Width/Height)",
+		"category": "Styling"
+	},
+	{
+		"filename": "connections-1",
+		"script": "Write Replica Canada <-> Write Replica Australia\n\nRead Replica <- Master\n\nx -- y\n\nsuper long shape id here -> super long shape id even longer here\n",
+		"name": "Basic Connection Types",
+		"category": "Connections"
+	},
+	{
+		"filename": "markdown-label",
+		"script": "explanation: |md\n  # I can do headers\n  - lists\n  - lists\n\n  And other normal markdown stuff\n|\n# Explicitly declare, even though the default shape is rectangle\nexplanation.shape: rectangle\n",
+		"name": "Markdown in Shape Label",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "styles-font-size",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    font-size: 28\n  }\n}\nx.style.font-size: 8\ny.style.font-size: 55\n",
+		"name": "Font Size Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "styles-font",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    font: mono\n  }\n}\nx.style.font: mono\ny.style.font: mono\n",
+		"name": "Font Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "triple-glob",
+		"script": "***.style.fill: yellow\n**.shape: circle\n*.style.multiple: true\n\nx: {\n  y\n}\n\nlayers: {\n  next: {\n    a\n  }\n}\n",
+		"name": "Triple Asterisk Glob (`***`)",
+		"category": "Globs"
+	},
+	{
+		"filename": "text-2",
+		"script": "plankton -> formula: will steal\nformula: |latex\n  \\lim_{h \\rightarrow 0 } \\frac{f(x+h)-f(x)}{h}\n|\n",
+		"name": "LaTeX in Shape Label",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "models",
+		"script": "postgres: {\n  shape: cylinder\n  icon: https://icons.terrastruct.com/dev%2Fpostgresql.svg\n  icon.near: bottom-center\n}\nit: IT Guy {\n  shape: person\n  style: {\n    fill: maroon\n  }\n}\nvpn: {\n  style: {\n    shadow: true\n  }\n  tooltip: IP is 192.2.2.1\n}\n",
+		"name": "Reusable Component Models",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "globs-connections",
+		"script": "vars: {\n  d2-config: {\n    layout-engine: elk\n  }\n}\n\nSpiderman 1\nSpiderman 2\nSpiderman 3\n\n* -> *: \ud83d\udc49\n",
+		"name": "Glob Connections Definition",
+		"category": "Globs"
+	},
+	{
+		"filename": "styles-stroke",
+		"script": "direction: right\nx -> y: hi {\n  style: {\n    # All CSS color names are valid\n    stroke: deepskyblue\n  }\n}\n# We need quotes for hex otherwise it gets interpreted as comment\nx.style.stroke: \"#f4a261\"\n",
+		"name": "Stroke Color Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "imports-template",
+		"script": "template: {\n  ...@imports-wrapper-template\n  synergy: {\n    our firm -> yours: value add\n  }\n  stakeholders: {\n    george.shape: person\n    tim.shape: person\n    tim.tooltip: is this web scale?\n  }\n}\n",
+		"name": "Imported Style Template",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "style-classes-1",
+		"script": "direction: right\nclasses: {\n  load balancer: {\n    label: load\\nbalancer\n    width: 100\n    height: 200\n    style: {\n      stroke-width: 0\n      fill: \"#44C7B1\"\n      shadow: true\n      border-radius: 5\n    }\n  }\n  unhealthy: {\n    style: {\n      fill: \"#FE7070\"\n      stroke: \"#F69E03\"\n    }\n  }\n}\n\nweb traffic -> web lb\nweb lb.class: load balancer\n\nweb lb -> api1\nweb lb -> api2\nweb lb -> api3\n\napi2.class: unhealthy\n\napi1 -> cache lb\napi3 -> cache lb\n\ncache lb.class: load balancer\n",
+		"name": "Applying Style Classes",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "grid-padding-2",
+		"script": "classes: {\n  kuber: {\n    style: {\n      fill: \"white\"\n      stroke: \"#aeb5bd\"\n      border-radius: 4\n      stroke-dash: 3\n    }\n  }\n  sys: {\n    label: \"\"\n    style: {\n      fill: \"#AFBFDF\"\n      stroke: \"#aeb5bd\"\n    }\n  }\n  node: {\n    grid-gap: 0\n    style: {\n      fill: \"#ebf3e6\"\n      border-radius: 8\n      stroke: \"#aeb5bd\"\n    }\n  }\n  clust: {\n    style: {\n      fill: \"#A7CC9E\"\n      stroke: \"#aeb5bd\"\n    }\n  }\n  deploy: {\n    grid-gap: 0\n    style: {\n      fill: \"#ffe6d5\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n  nextpod: {\n    width: 180\n    icon: https://www.svgrepo.com/show/378440/nextjs-fill.svg\n    style: {\n      fill: \"#ECECEC\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n  flaskpod: {\n    width: 180\n    icon: https://www.svgrepo.com/show/508915/flask.svg\n    style: {\n      fill: \"#ECECEC\"\n      stroke: \"#aeb5bd\"\n      # border-radius: 4\n    }\n  }\n}\n\nclasses\n\nKubernetes: {\n  grid-columns: 2\n  system: {\n    grid-columns: 1\n    Backend Node: {\n      grid-columns: 2\n      ClusterIP\\nService 1\n      Deployment 1: {\n        grid-rows: 3\n        NEXT POD 1\n        NEXT POD 2\n        NEXT POD 3\n      }\n    }\n    Frontend Node: {\n      grid-columns: 2\n      ClusterIP\\nService 2\n      Deployment 2: {\n        grid-rows: 3\n        FLASK POD 1\n        FLASK POD 2\n        FLASK POD 3\n      }\n    }\n  }\n}\n\nkubernetes.class: kuber\nkubernetes.system.class: sys\n\nkubernetes.system.backend node.class: node\nkubernetes.system.backend node.clusterip\\nservice 1.class: clust\nkubernetes.system.backend node.deployment 1.class: deploy\nkubernetes.system.backend node.deployment 1.next pod*.class: nextpod\n\nkubernetes.system.frontend node.class: node\nkubernetes.system.frontend node.clusterip\\nservice 2.class: clust\nkubernetes.system.frontend node.deployment 2.class: deploy\nkubernetes.system.frontend node.deployment 2.flask pod*.class: flaskpod\n",
+		"name": "Kubernetes Grid Layout (Refined Padding)",
+		"category": "Layout"
+	},
+	{
+		"filename": "tax",
+		"script": "title: Current state {\n  near: top-center\n  shape: text\n  style: {\n    font-size: 40\n  }\n}\n\nyou -> accountant\nyou -> turbotax\nturbotax -> government\naccountant -> turbotax\ngovernment -> you: You owe\\nus this much {\n  style.opacity: 0\n}\n\nscenarios: {\n  better: {\n    title.label: A better world\n    accountant.style.opacity: 0.2\n    turbotax.style.opacity: 0.2\n    you -> accountant: {\n      style.opacity: 0.2\n    }\n    you -> turbotax: {\n      style.opacity: 0.2\n    }\n    accountant -> turbotax: {\n      style.opacity: 0.2\n    }\n    turbotax -> government: {\n      style.opacity: 0.2\n    }\n\n    government -> you: {\n      style.opacity: 1\n      style.animated: true\n    }\n  }\n}\n",
+		"name": "Scenario Visualization with Layers",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sequence-diagrams-group",
+		"script": "shape: sequence_diagram\n# Predefine actors\nalice\nbob\nshower thoughts: {\n  alice -> bob: A physicist is an atom's way of knowing about atoms.\n  alice -> bob: Today is the first day of the rest of your life.\n}\nlife advice: {\n  bob -> alice: If all else fails, lower your standards.\n}\n",
+		"name": "Sequence Diagram Grouping",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "wcc",
+		"script": "How to become the World Chess Champion: {\n  near: top-center\n  shape: text\n  style.font-size: 55\n}\n\ngm: Become a Grandmaster (GM) {\n  link: layers.gm\n}\nqualify: Qualify for the Candidates Tournament {\n  link: layers.qualify\n}\nwin: Win the Candidates Tournament {\n  link: layers.win\n}\nmatch: Defeat the former Champion {\n  link: layers.match\n}\n\ngm -> qualify -> win -> match\n\nlayers: {\n  gm: {\n    description: |md\n      # Become a Grandmaster (GM)\n      A Grandmaster is the highest title awarded by FIDE (the International Chess Federation).\n    | {\n      near: top-center\n    }\n    play: Play in FIDE-rated tournaments\n    \u27a1\ufe0f: {\n      shape: text\n      near: center-right\n      link: steps.1\n      style.font-size: 24\n    }\n    \n    steps: {\n      1: {\n        titled: Earn pre-requisite titles (IM)\n        play -> titled\n        \u27a1\ufe0f.link: _.steps.2\n      }\n      2: {\n        \u27a1\ufe0f.link: _._\n        rating: Achieve 2500 rating\n        norms: Earn 3 GM norms\\n(defeat other GMs in tournaments)\n        titled -> rating\n        titled -> norms\n      }\n    }\n  }\n  qualify: {\n    description: |md\n      # Qualify for the Candidates Tournament\n      The Candidates tournament is played among the best players in the world to determine the challenger for the next world chess championship.\n    | {\n      near: top-center\n    }\n    One of: {\n      Runner-up to last championship\n      Finish top 2 in FIDE Grand Prix\n      Top 2 highest rated\n      Organizer wild card\n      Occasional other FIDE events: {\n        This varies year to year\n      }\n    }\n  }\n  win: {\n    description: |md\n      # Winning the Candidates tournament\n\n      8-players face off in a double round-robin.\n\n      Which mean each player plays every other player, one with white and once with black.\n    | {\n      near: top-center\n    }\n\n    2022 Players: {\n      grid-rows: 9\n      grid-columns: 3\n      grid-gap: 0\n\n      Player\n      Rating\n      World ranking\n\n      Ian Nepomniachtchi\n      2766\n      7\n\n      Teimour Radjabov\n      2753\n      13\n\n      Jan-Krzysztof Duda\n      2750\n      16\n\n      Alireza Firouzja\n      2793\n      3\n\n      Fabiano Caruana\n      2783\n      4\n\n      Hikaru Nakamura\n      2760\n      11\n\n      Richard Rapport\n      2764\n      8\n\n      Ding Liren\n      2806\n      2\n    }\n  }\n  match: {\n    description: |md\n      # World Chess Championship Match\n      A 14-game 1v1 between the challenger and the current world champion[0].\n\n      [0] Usually. In 2023, Magnus Carlsen declined to participate.\n\n      Instead, the runner-up of the Candidates tournament plays.\n    | {\n      near: top-center\n    }\n\n    ding: Ding Liren {\n      icon: https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/World_Chess_Championship_2023%2C_game_01%2C_Ding_Liren.jpg/220px-World_Chess_Championship_2023%2C_game_01%2C_Ding_Liren.jpg\n      shape: image\n      near: center-left\n      height: 300\n      width: 200\n    }\n\n    nepo: Ian Nepomniachtchi {\n      icon: https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/World_Chess_Championship_2021%2C_game_07%2C_Ian_Nepomniachtchi_%28cropped%29.jpg/220px-World_Chess_Championship_2021%2C_game_07%2C_Ian_Nepomniachtchi_%28cropped%29.jpg\n      shape: image\n      near: center-right\n      height: 300\n      width: 200\n    }\n\n    best of 14 games -> tiebreaks: if needed\n    tiebreaks.link: layers.tiebreaks\n    \n    layers: {\n      tiebreaks: {\n        description: |md\n          # Tiebreaks\n\n          Use faster time controls to induce errors.\n        | {\n          near: top-center\n        }\n\n        rapid: 4 rapid games {\n          25 mins per side\n          10-second increment\n        }\n\n        blitz: 2 blitz games {\n          5 mins per side\n          3-second increment\n        }\n\n        sudden death: {\n          3 mins per side\n          2-second increment\n          repeat until a win\n        }\n\n        rapid -> blitz -> sudden death: if needed\n      }\n    }\n  }\n}\n",
+		"name": "Layered Diagram (WCC Example)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "imports-mv-ssh-view",
+		"script": "...@models\nit -> postgres: ssh, bypassing VPN\n",
+		"name": "Importing and Connecting Models (SSH View)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sequence-diagrams-note",
+		"script": "shape: sequence_diagram\nalice -> bob\nbob.\"In the eyes of my dog, I'm a man.\"\n# Notes can go into groups, too\nimportant insight: {\n  bob.\"Cold hands, no gloves.\"\n}\nbob -> alice: Chocolate chip.\n",
+		"name": "Sequence Diagram Notes",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "ordered-classes",
+		"script": "classes: {\n  uno: {\n    label: 1\n  }\n  dos: {\n    label: 2\n  }\n}\n\nx.class: [uno; dos]\ny.class: [dos; uno]\n",
+		"name": "Class Application Order",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "styles-table-stroke",
+		"script": "direction: right\ncostumes: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  silliness: int\n  last_updated: timestamp\n  style.stroke: \"#E5F7FD\"\n}\n\nparser: {\n  shape: class\n  -lookahead: \"[]rune\"\n  +peek(): (r rune, eof bool)\n  rewind()\n  commit()\n  style.stroke: \"#E5F7FD\"\n}\n\ncostumes -> parser\n",
+		"name": "Table/Class Stroke Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "users-v0.1",
+		"script": "users: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  email: string\n  name: string\n  verified_email: boolean\n  password: string\n  created_at: timestamp\n}\n",
+		"name": "SQL Table Definitions v0.1 (for import)",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "imports-wrapper-template",
+		"script": "style: {\n  fill: \"#E3EDE6\"\n  fill-pattern: dots\n  stroke: \"#820758\"\n  stroke-width: 3\n  border-radius: 2\n  shadow: true\n}\nlabel: \"\"\n",
+		"name": "Style Wrapper Template (for import)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "icons-1",
+		"script": "deploy: {\n  icon: https://icons.terrastruct.com/aws%2FDeveloper%20Tools%2FAWS-CodeDeploy.svg\n}\n\nbackup: {\n  icon: https://icons.terrastruct.com/aws%2FStorage%2FAWS-Backup.svg\n}\n\ndeploy -> backup: {\n  icon: https://icons.terrastruct.com/infra%2F002-backup.svg\n}\n",
+		"name": "Icons on Shapes and Connections",
+		"category": "Icons & Images"
+	},
+	{
+		"filename": "grid-nested-connections",
+		"script": "classes: {\n  empty: {\n    label: \"\"\n    style: {\n      fill: transparent\n      stroke-width: 0\n    }\n  }\n  text: {\n    style: {\n      fill: transparent\n      stroke-width: 0\n    }\n  }\n  cluster: {\n    style: {\n      fill: transparent\n      stroke-dash: 4\n      stroke: \"#C6D3DF\"\n    }\n  }\n  grid: {\n    grid-columns: 1\n    label: \"\"\n    style: {\n      fill: white\n      stroke-width: 0\n    }\n  }\n  row: {\n    grid-rows: 1\n    label: \"\"\n    style: {\n      fill: transparent\n      stroke-width: 0\n    }\n  }\n}\n\nvars: {\n  left-cluster: {\n    label: \"n-sized Vector\"\n    class: cluster\n    0*.style.fill: \"#DFEFFA\"\n    0*.style.stroke: black\n    grid-rows: 1\n    grid-gap: 0\n    label.near: outside-top-left\n\n    \"0.62\"\n    \"0.15\"\n    empty1.class: empty\n    n.class: text\n    empty2.class: empty\n    \"0.91\"\n    \"0.48\"\n\n    \"0.15\" <- n -> \"0.91\"\n  }\n  right-cluster: {\n    label: \"m-sized Vector\"\n    class: cluster\n    0*.style.fill: \"#72F5FF\"\n    0*.style.stroke: black\n    grid-rows: 1\n    grid-gap: 0\n    label.near: outside-top-left\n\n    \"0.62\"\n    \"0.15\"\n    empyt1.class: empty\n    m.class: text\n    empty2.class: empty\n    \"0.91\"\n    \"0.48\"\n\n    \"0.15\" <- m -> \"0.91\"\n  }\n}\n\ngrid-rows: 2\n\ntop-row: {\n  class: row\n  empty.class: empty\n  empty.width: 1100\n\n  Random Matrix Generator: {\n    width: 300\n    height: 170\n    style.font-size: 20\n    style.fill: \"#A7BBCF\"\n    style.stroke: black\n    style.border-radius: 10\n  }\n}\n\nbottom-row: {\n  class: row\n  left-grid: {\n    class: grid\n\n    1: ${left-cluster}\n    2: ${left-cluster}\n    3: ${left-cluster}\n  }\n\n  dot-container: {\n    class: empty\n    grid-columns: 1\n    empty1.class: empty\n    dot: Dot product {\n      class: text\n      circle: \"\" {\n        shape: circle\n        style.fill: black\n        style.stroke-width: 0\n        width: 20\n        height: 20\n      }\n      label.near: outside-bottom-center\n    }\n  }\n\n  matrix-container: {\n    class: empty\n    grid-columns: 1\n    matrix: Target dimension matrix {\n      label.near: outside-top-center\n      grid-rows: 4\n      grid-gap: 0\n      *.width: 100\n      *.height: 100\n      *.style.fill: \"#F1F6F9\"\n      *.style.stroke: black\n      \"0.41\"\n      \"0.32\"\n      \"0.92\"\n      \"0.13\"\n\n      \"0.74\"\n      \"0.15\"\n      \"0.53\"\n      \"0.21\"\n\n      \"0.97\"\n      \"0.45\"\n      \"0.11\"\n      \"0.05\"\n\n      \"0.61\"\n      \"0.77\"\n      \"0.59\"\n      \"0.83\"\n    }\n  }\n\n  empty.class: empty\n\n  right-grid: {\n    class: grid\n\n    1: ${right-cluster}\n    2: ${right-cluster}\n    3: ${right-cluster}\n  }\n\n  matrix-container -> right-grid\n}\n\ntop-row.Random Matrix Generator -> bottom-row.matrix-container.matrix\n",
+		"name": "Nested Grid with Connections",
+		"category": "Layout"
+	},
+	{
+		"filename": "sequence-diagrams-lifeline",
+		"script": "shape: sequence_diagram\nalice -> bob: What does it mean\\nto be well-adjusted?\nbob -> alice: The ability to play bridge or\\ngolf as if they were games.\n\nalice.style: {\n  stroke: red\n  stroke-dash: 0\n}\n",
+		"name": "Sequence Diagram Lifeline Styling",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "connections-4",
+		"script": "Stage One -> Stage Two -> Stage Three -> Stage Four\nStage Four -> Stage One: repeat\n",
+		"name": "Connection Loop",
+		"category": "Connections"
+	},
+	{
+		"filename": "null-connection",
+		"script": "one -> two\n\n(one -> two)[0]: null\n",
+		"name": "Nullifying Connections",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "null-implicit-descendant",
+		"script": "one: {\n  two: {\n    three\n  }\n}\n\none.two: null\n",
+		"name": "Nullifying Container Contents",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "styles-border-radius",
+		"script": "direction: right\nx -> y: hi\nx.style.border-radius: 3\ny.style.border-radius: 8\n",
+		"name": "Border Radius Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "grid",
+		"script": "grid-rows: 5\nstyle.fill: black\n\nclasses: {\n  white square: {\n    label: \"\"\n    width: 120\n    style: {\n      fill: white\n      stroke: cornflowerblue\n      stroke-width: 10\n    }\n  }\n  block: {\n    style: {\n      text-transform: uppercase\n      font-color: white\n      fill: darkcyan\n      stroke: black\n    }\n  }\n}\n\nflow1.class: white square\nflow2.class: white square\nflow3.class: white square\nflow4.class: white square\nflow5.class: white square\nflow6.class: white square\nflow7.class: white square\nflow8.class: white square\nflow9.class: white square\n\ndagger engine: {\n  width: 800\n  class: block\n  style: {\n    fill: beige\n    stroke: darkcyan\n    font-color: blue\n    stroke-width: 8\n  }\n}\n\nany docker compatible runtime: {\n  width: 800\n  class: block\n  style: {\n    fill: lightcyan\n    stroke: darkcyan\n    font-color: black\n    stroke-width: 8\n  }\n  icon: https://icons.terrastruct.com/dev%2Fdocker.svg\n}\n\nany ci: {\n  class: block\n  style: {\n    fill: gold\n    stroke: maroon\n    font-color: maroon\n    stroke-width: 8\n  }\n}\nwindows.class: block\nlinux.class: block\nmacos.class: block\nkubernetes.class: block\n",
+		"name": "Grid for Block Organization",
+		"category": "Layout"
+	},
+	{
+		"filename": "connections-reference",
+		"script": "x -> y: hi\nx -> y: hello\n\n(x -> y)[0].style.stroke: red\n(x -> y)[1].style.stroke: blue\n",
+		"name": "Referencing Connections by Index",
+		"category": "Connections"
+	},
+	{
+		"filename": "icon-placement",
+		"script": "vpc: VPC 1 10.1.0.0./16 {\n  icon: https://icons.terrastruct.com/aws%2F_Group%20Icons%2FVirtual-private-cloud-VPC_light-bg.svg\n  style: {\n    stroke: green\n    font-color: green\n    fill: white\n  }\n  az: Availability Zone A {\n    style: {\n      stroke: blue\n      font-color: blue\n      stroke-dash: 3\n      fill: white\n    }\n    firewall: Firewall Subnet A {\n      icon: https://icons.terrastruct.com/aws%2FNetworking%20&%20Content%20Delivery%2FAmazon-Route-53_Hosted-Zone_light-bg.svg\n      style: {\n        stroke: purple\n        font-color: purple\n        fill: \"#e1d5e7\"\n      }\n      ec2: EC2 Instance {\n        icon: https://icons.terrastruct.com/aws%2FCompute%2F_Instance%2FAmazon-EC2_C4-Instance_light-bg.svg\n      }\n    }\n  }\n}\n",
+		"name": "Icon Placement in Nested Containers",
+		"category": "Icons & Images"
+	},
+	{
+		"filename": "overrides-1",
+		"script": "visual studio code text editor\nvisual studio code text editor: visual_studio_code_text_editor\n# Remember that shape keys are case insensitive\nvisual studio CODE text editor: VisualStudioCodeTextEditor\nvisual studio code TEXT editor: Visual Studio Code Text Editor\nvisual STUDIO code text editor\n",
+		"name": "Shape Label/ID Overrides",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "vars-scoped",
+		"script": "vars: {\n  region: Global\n}\n\nlb: ${region} load balancer\n\nzone1: {\n  vars: {\n    region: us-east-1\n  }\n  server: ${region} API\n}\n",
+		"name": "Scoped Variables",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "links",
+		"script": "x: I'm a Mac {\n  link: https://apple.com\n}\ny: And I'm a PC {\n  link: https://microsoft.com\n}\nx -> y: gazoontite {\n  link: https://google.com\n}\n",
+		"name": "Hyperlinks on Shapes and Connections",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "sequence-diagrams-self",
+		"script": "shape: sequence_diagram\nson -> father: Can I borrow your car?\nfriend -> father: Never lend your car to anyone to whom you have given birth.\nfather -> father: internal debate ensues\n",
+		"name": "Sequence Diagram Self-Connection",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "suspend-3",
+		"script": "# -----\n# Models\n# -----\nrestaurants: Restaurants {\n  style.stroke-dash: 2\n  *.style.fill: \"#66c4e3\"\n  chip: Chipotle\n  cfa: Chick-Fil-A\n  bk: Burger King\n\n  chip -> bk: competes with\n}\n\ndiners: Diners {\n  daniel\n  zack\n}\n\n# -----\n# Model Relationships\n# -----\ndiners -> restaurants: eat at\n\ndiners.daniel -> restaurants.chip: likes\ndiners.daniel -> restaurants.cfa: dislikes\n\ndiners.zack -> restaurants.bk: likes\ndiners.zack -> restaurants.chip: likes\n\n# Treat the above as models\n**: suspend\n(** -> **)[*]: suspend\n\n# Display only models connected to bk and their relationships\n(** -> **)[*]: unsuspend {\n  &dst: restaurants.bk\n}\n",
+		"name": "Filtering by Connection Endpoints (Suspend/Unsuspend)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "grid-row-dominant",
+		"script": "grid-rows: 4\ngrid-columns: 2\n\na\n\nsteps: {\n  1: {\n    b\n  }\n  2: {\n    c\n  }\n  3: {\n    d\n  }\n  4: {\n    e\n  }\n  5: {\n    f\n  }\n  6: {\n    g\n  }\n  7: {\n    h\n  }\n}\n",
+		"name": "Row-Dominant Grid Layout",
+		"category": "Layout"
+	},
+	{
+		"filename": "shapes-3",
+		"script": "# Shape catalog of standard shapes\n\nclasses: {\n  hidden: {\n    label: \"\"\n    style.fill: transparent\n    style.stroke-width: 0\n  }\n  example: {\n    style.fill: white\n    width: 180\n    height: 120\n    style.font-size: 20\n    style.bold: false\n  }\n}\n\nstyle.fill: transparent\n\ngrid-rows: 5\ngrid-gap: 0\n\none: {\n  class: hidden\n  rectangle.shape: rectangle\n  square.shape: square\n  page.shape: page\n  parallelogram.shape: parallelogram\n\n  # Color fixups to ensure all shapes have white fill\n  # TODO change this to use globs when implemented\n  rectangle.class: example\n  square.class: example\n  page.class: example\n  parallelogram.class: example\n}\n\ntwo: {\n  class: hidden\n  document.shape: document\n  cylinder.shape: cylinder\n  queue.shape: queue\n  package.shape: package\n\n  document.class: example\n  cylinder.class: example\n  queue.class: example\n  package.class: example\n}\n\nthree: {\n  class: hidden\n  step.shape: step\n  callout.shape: callout\n  stored_data.shape: stored_data\n  person.shape: person\n\n  step.class: example\n  callout.class: example\n  stored_data.class: example\n  person.class: example\n}\n\nfour: {\n  class: hidden\n  diamond.shape: diamond\n  oval.shape: oval\n  circle.shape: circle\n  hexagon.shape: hexagon\n\n  diamond.class: example\n  oval.class: example\n  circle.class: example\n  hexagon.class: example\n}\n\nfive: {\n  class: hidden\n  cloud.shape: cloud\n  cloud.class: example\n  c4person.shape: c4-person\n  c4person.class: example\n  c4person.label: c4-person\n}\n",
+		"name": "Standard Shape Catalog",
+		"category": "Shapes"
+	},
+	{
+		"filename": "legend",
+		"script": "vars: {\n  d2-legend: {\n    a: {\n      label: Microservice\n    }\n    b: Database {\n      shape: cylinder\n      style.stroke-dash: 2\n    }\n    a <-> b: Good relationship {\n      style.stroke: red\n      style.stroke-dash: 2\n      style.stroke-width: 1\n    }\n    a -> b: Bad relationship\n    a -> b: Tenuous {\n      target-arrowhead.shape: circle\n    }\n  }\n}\n\napi-1\napi-2\n\napi-1 -> postgres\napi-2 -> postgres\n\npostgres: {\n  shape: cylinder\n}\npostgres -> external: {\n  style.stroke: black\n}\n\napi-1 <-> api-2: {\n  style.stroke: red\n  style.stroke-dash: 2\n}\napi-1 -> api-3: {\n  target-arrowhead.shape: circle\n}\n",
+		"name": "Diagram Legend (`d2-legend`)",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "strings-2",
+		"script": "'$$$' -> \"###\"\n",
+		"name": "Special Characters in Strings",
+		"category": "Basics"
+	},
+	{
+		"filename": "null-basic",
+		"script": "one\ntwo\n\none: null\n",
+		"name": "Nullifying Shapes",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "globs-intro",
+		"script": "iphone 10\niphone 11 mini\niphone 11 pro\niphone 12 mini\n\n*.height: 300\n*.width: 140\n*mini.height: 200\n*pro.height: 400\n",
+		"name": "Basic Glob Styling",
+		"category": "Globs"
+	},
+	{
+		"filename": "code",
+		"script": "some code: |`ts\n  declare function getSmallPet(): Fish | Bird;\n  const works = (a > 1) || (b < 2)\n`|\nexplanation: |go\n  awsSession := From(c.Request.Context())\n  client := s3.New(awsSession)\n\n  ctx, cancelFn := context.WithTimeout(c.Request.Context(), AWS_TIMEOUT)\n  defer cancelFn()\n|\n\nsome code -> explanation -> some code\n",
+		"name": "Code Blocks (TS, Go)",
+		"category": "Text & Markdown"
+	},
+	{
+		"filename": "near-explanation",
+		"script": "explanation: |md\n  # LLMs\n  The Large Language Model (LLM) is a powerful AI\\\n    system that learns from vast amounts of text data.\\\n  By analyzing patterns and structures in language,\\\n  it gains an understanding of grammar, facts,\\\n  and even some reasoning abilities. As users input text,\\\n  the LLM predicts the most likely next words or phrases\\\n  to create coherent responses. The model\\\n  continuously fine-tunes its output, considering both the\\\n  user's input and its own vast knowledge base.\\\n  This cutting-edge technology enables LLM to generate human-like text,\\\n  making it a valuable tool for various applications.\n| {\n  near: center-left\n}\n\nML Platform -> Pre-trained models\nML Platform -> Model registry\nML Platform -> Compiler\nML Platform -> Validation\nML Platform -> Auditing\n\nModel registry -> Server.Batch Predictor\nServer.Online Model Server\n",
+		"name": "Positioning Explanation Block (`near`)",
+		"category": "Layout"
+	},
+	{
+		"filename": "japan",
+		"script": "classes: {\n  NONE: {style.opacity: 0}\n  GREEN: {style.stroke: \"#2b9464\"; style.fill: \"#2b9464\"}\n  RED: {style.stroke: \"#d14d28\"; style.fill: \"#d14d28\"}\n  YELLOW: {style.stroke: \"#f5df65\"; style.fill: \"#f5df65\"}\n  BLUE: {style.stroke: \"#59c8df\"; style.fill: \"#59c8df\"}\n}\n\ngrid-rows: 12\ngrid-columns: 12\ngrid-gap: 0\n\n12-1: \"\" {class: NONE}\n12-2: \"\" {class: NONE}\n12-3: \"\" {class: NONE}\n12-4: \"\" {class: NONE}\n12-5: \"\" {class: NONE}\n12-6: \"\" {class: NONE}\n12-7: \"\" {class: NONE}\n12-8: \"\" {class: NONE}\n12-9: \"\" {class: NONE}\n12-10: \"\" {class: NONE}\n12-11: \"\" {class: GREEN}\n12-12: \"\u5317\u6d77\u9053\" {class: GREEN}\n\n11-1: \"\" {class: NONE}\n11-2: \"\" {class: NONE}\n11-3: \"\" {class: NONE}\n11-4: \"\" {class: NONE}\n11-5: \"\" {class: NONE}\n11-6: \"\" {class: NONE}\n11-7: \"\" {class: NONE}\n11-8: \"\" {class: NONE}\n11-9: \"\" {class: NONE}\n11-10: \"\" {class: NONE}\n11-11: \"\" {class: GREEN}\n11-12: \"\" {class: GREEN}\n\n10-1: \"\" {class: NONE}\n10-2: \"\" {class: NONE}\n10-3: \"\" {class: NONE}\n10-4: \"\" {class: NONE}\n10-5: \"\" {class: NONE}\n10-6: \"\" {class: NONE}\n10-7: \"\" {class: NONE}\n10-8: \"\" {class: NONE}\n10-9: \"\" {class: NONE}\n10-10: \"\" {class: NONE}\n10-11: \"\u9752\u68ee\" {class: RED}\n10-12: \"\" {class: NONE}\n\n9-1: \"\" {class: NONE}\n9-2: \"\" {class: NONE}\n9-3: \"\" {class: NONE}\n9-4: \"\" {class: NONE}\n9-5: \"\" {class: NONE}\n9-6: \"\" {class: NONE}\n9-7: \"\" {class: NONE}\n9-8: \"\" {class: NONE}\n9-9: \"\" {class: NONE}\n9-10: \"\" {class: NONE}\n9-11: \"\u79cb\u7530\" {class: YELLOW}\n9-12: \"\u5ca9\u624b\" {class: GREEN}\n\n8-1: \"\" {class: NONE}\n8-2: \"\" {class: NONE}\n8-3: \"\" {class: NONE}\n8-4: \"\" {class: NONE}\n8-5: \"\" {class: NONE}\n8-6: \"\" {class: NONE}\n8-7: \"\" {class: NONE}\n8-8: \"\u77f3\u5ddd\" {class: GREEN}\n8-9: \"\" {class: NONE}\n8-10: \"\u65b0\u6f5f\" {class: BLUE}\n8-11: \"\u5c71\u5f62\" {class: RED}\n8-12: \"\u5bae\u57ce\" {class: BLUE}\n\n7-1: \"\" {class: NONE}\n7-2: \"\" {class: NONE}\n7-3: \"\" {class: NONE}\n7-4: \"\" {class: NONE}\n7-5: \"\" {class: NONE}\n7-6: \"\" {class: NONE}\n7-7: \"\" {class: NONE}\n7-8: \"\u798f\u4e95\" {class: RED}\n7-9: \"\u5bcc\u5c71\" {class: YELLOW}\n7-10: \"\u7fa4\u99ac\" {class: GREEN}\n7-11: \"\u6803\u6728\" {class: YELLOW}\n7-12: \"\u798f\u5cf6\" {class: GREEN}\n\n6-1: \"\" {class: NONE}\n6-2: \"\" {class: NONE}\n6-3: \"\u5c71\u53e3\" {class: RED}\n6-4: \"\u5cf6\u6839\" {class: YELLOW}\n6-5: \"\u9ce5\u53d6\" {class: RED}\n6-6: \"\u5175\u5eab\" {class: BLUE}\n6-7: \"\u4eac\u90fd\" {class: YELLOW}\n6-8: \"\u6ecb\u8cc0\" {class: GREEN}\n6-9: \"\u9577\u91ce\" {class: RED}\n6-10: \"\u5c71\u68a8\" {class: YELLOW}\n6-11: \"\u57fc\u7389\" {class: BLUE}\n6-12: \"\u8328\u57ce\" {class: RED}\n\n5-1: \"\" {class: NONE}\n5-2: \"\" {class: NONE}\n5-3: \"\" {class: NONE}\n5-4: \"\u5e83\u5cf6\" {class: BLUE}\n5-5: \"\u5ca1\u5c71\" {class: YELLOW}\n5-6: \"\u5927\u962a\" {class: GREEN}\n5-7: \"\u5948\u826f\" {class: RED}\n5-8: \"\u5c90\u961c\" {class: BLUE}\n5-9: \"\u611b\u77e5\" {class: YELLOW}\n5-10: \"\u9759\u5ca1\" {class: BLUE}\n5-11: \"TOKYO\" {class: GREEN}\n5-12: \"\u5343\u8449\" {class: YELLOW}\n\n4-1: \"\u9577\u5d0e\" {class: BLUE}\n4-2: \"\u4f50\u8cc0\" {class: RED}\n4-3: \"\u798f\u5ca1\" {class: GREEN}\n4-4: \"\" {class: NONE}\n4-5: \"\" {class: NONE}\n4-6: \"\" {class: NONE}\n4-7: \"\u548c\u6b4c\u5c71\" {class: GREEN}\n4-8: \"\u4e09\u91cd\" {class: RED}\n4-9: \"\" {class: NONE}\n4-10: \"\" {class: NONE}\n4-11: \"\u795e\u5948\u5ddd\" {class: RED}\n4-12: \"\" {class: NONE}\n\n3-1: \"\" {class: NONE}\n3-2: \"\u718a\u672c\" {class: YELLOW}\n3-3: \"\u5927\u5206\" {class: BLUE}\n3-4: \"\" {class: NONE}\n3-5: \"\u611b\u5a9b\" {class: RED}\n3-6: \"\u9999\u5ddd\" {class: BLUE}\n3-7: \"\" {class: NONE}\n3-8: \"\" {class: NONE}\n3-9: \"\" {class: NONE}\n3-10: \"\" {class: NONE}\n3-11: \"\" {class: NONE}\n3-12: \"\" {class: NONE}\n\n2-1: \"\" {class: NONE}\n2-2: \"\u9e7f\u5150\u5cf6\" {class: RED}\n2-3: \"\u5bae\u5d0e\" {class: GREEN}\n2-4: \"\" {class: NONE}\n2-5: \"\u9ad8\u77e5\" {class: GREEN}\n2-6: \"\u5fb3\u5cf6\" {class: YELLOW}\n2-7: \"\" {class: NONE}\n2-8: \"\" {class: NONE}\n2-9: \"\" {class: NONE}\n2-10: \"\" {class: NONE}\n2-11: \"\" {class: NONE}\n2-12: \"\" {class: NONE}\n\n1-1: \"\u6c96\u7e04\" {class: BLUE}\n1-2: \"\" {class: NONE}\n1-3: \"\" {class: NONE}\n1-4: \"\" {class: NONE}\n1-5: \"\" {class: NONE}\n1-6: \"\" {class: NONE}\n1-7: \"\" {class: NONE}\n1-8: \"\" {class: NONE}\n1-9: \"\" {class: NONE}\n1-10: \"\" {class: NONE}\n1-11: \"\" {class: NONE}\n1-12: \"\" {class: NONE}\n\n5-11\n",
+		"name": "Grid Pixel Art (Map of Japan)",
+		"category": "Layout"
+	},
+	{
+		"filename": "grid-3",
+		"script": "grid-columns: 3\nExecutive\nLegislative\nJudicial\n",
+		"name": "Simple 1x3 Grid",
+		"category": "Layout"
+	},
+	{
+		"filename": "globs-inverse-filter",
+		"script": "bravo team.shape: person\ncharlie team.shape: person\ncommand center.shape: cloud\nhq.shape: rectangle\n\n*: {\n  !&shape: person\n  style.multiple: true\n}\n",
+		"name": "Inverse Glob Filtering",
+		"category": "Globs"
+	},
+	{
+		"filename": "sample4",
+		"script": "payment\n\nAWS: {\n  orchestrator: Orchestrator\n  airflow: Apache Airflow {\n    queue1: Queue 1 {\n      shape: queue\n    }\n    queue2: Queue 2 {\n      shape: queue\n    }\n    queue3: Queue 3 {\n      shape: queue\n    }\n    queue4: Queue 4 {\n      shape: queue\n    }\n  }\n\n  orchestrator -> airflow.queue1\n  orchestrator -> airflow.queue2\n  orchestrator -> airflow.queue3\n  orchestrator -> airflow.queue4\n}\n\npayment -> AWS.orchestrator\n\nbackup: Data backup\n\nAWS.airflow.queue3 -> backup\nAWS.airflow.queue4 -> backup\n\ndata: Data warehouse\n\nAWS.airflow.queue1 -> data\nAWS.airflow.queue2 -> data\n\nlocal: On-prem backups {\n  queue1: Queue 1 {\n    shape: queue\n  }\n  queue2: Queue 2 {\n    shape: queue\n  }\n}\n\nbackup -> local.queue1\nbackup -> local.queue2\n",
+		"name": "Data Pipeline with Queues",
+		"category": "Containers"
+	},
+	{
+		"filename": "globs-filter-endpoints",
+		"script": "a: {\n  shape: circle\n  style: {\n    fill: blue\n    opacity: 0.8\n  }\n}\nb: {\n  shape: rectangle\n  style: {\n    fill: red\n    opacity: 0.5\n  }\n}\nc: {\n  shape: diamond\n  style.fill: green\n  style.opacity: 0.8\n}\n(* -> *)[*]: {\n  &src.style.fill: blue\n  style.stroke-dash: 3\n}\n(* -> *)[*]: {\n  &dst.style.opacity: 0.8\n  style.stroke: cyan\n}\n(* -> *)[*]: {\n  &src.shape: rectangle\n  &dst.style.fill: green\n  style.stroke-width: 5\n}\na -> b\nb -> c\na -> c\n",
+		"name": "Glob Filtering Connections by Endpoints",
+		"category": "Globs"
+	},
+	{
+		"filename": "classes-1",
+		"script": "MyClass: {\n  shape: class\n\n  field: \"[]string\"\n  method(a uint64): (x, y int)\n}\n",
+		"name": "Basic Class Diagram",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "globs-scope",
+		"script": "foods: {\n  pizzas: {\n    cheese\n    sausage\n    pineapple\n    *.shape: circle\n  }\n  humans: {\n    john\n    james\n    *.shape: person\n  }\n  humans.* -> pizzas.pineapple: eats\n}\n",
+		"name": "Glob Scoping",
+		"category": "Globs"
+	},
+	{
+		"filename": "tooltip",
+		"script": "x: {tooltip: Total abstinence is easier than perfect moderation}\ny: {tooltip: Gee, I feel kind of LIGHT in the head now,\\nknowing I can't make my satellite dish PAYMENTS!}\nx -> y\n",
+		"name": "Tooltips on Shapes",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "styles-fill",
+		"script": "direction: right\nx -> y: hi\ny -> z\nx.style.fill: \"#f4a261\"\ny.style.fill: honeydew\nz.style.fill: \"linear-gradient(#f69d3c, #3f87a6)\"\n",
+		"name": "Fill Color and Gradient Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "containers-underscore",
+		"script": "christmas: {\n  presents\n}\nbirthdays: {\n  presents\n  _.christmas.presents -> presents: regift\n  _.christmas.style.fill: \"#ACE1AF\"\n}\n",
+		"name": "Relative Container References (`_`)",
+		"category": "Containers"
+	},
+	{
+		"filename": "sequence-diagrams-3",
+		"script": "shape: sequence_diagram\nalice.t1 -> bob\nalice.t2 -> bob.a\nalice.t2.a -> bob.a\nalice.t2.a <- bob.a\nalice.t2 <- bob.a\n",
+		"name": "Sequence Diagram Nested Activations",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "theme-override",
+		"script": "vars: {\n  d2-config: {\n    theme-overrides: {\n      B1: \"#2E7D32\"\n      B2: \"#66BB6A\"\n      B3: \"#A5D6A7\"\n      B4: \"#C5E1A5\"\n      B5: \"#E6EE9C\"\n      B6: \"#FFF59D\"\n\n      AA2: \"#0D47A1\"\n      AA4: \"#42A5F5\"\n      AA5: \"#90CAF9\"\n\n      AB4: \"#F44336\"\n      AB5: \"#FFCDD2\"\n    }\n  }\n}\nnetwork: {\n  cell tower: {\n    satellites: {\n      shape: stored_data\n      style.multiple: true\n    }\n\n    transmitter\n\n    satellites -> transmitter: send\n    satellites -> transmitter: send\n    satellites -> transmitter: send\n  }\n\n  online portal: {\n    ui: {shape: hexagon}\n  }\n\n  data processor: {\n    storage: {\n      shape: cylinder\n      style.multiple: true\n    }\n  }\n\n  cell tower.transmitter -> data processor.storage: phone logs\n}\n\nuser: {\n  shape: person\n  width: 130\n}\n\nuser -> network.cell tower: make call\nuser -> network.online portal.ui: access {\n  style.stroke-dash: 3\n}\n\napi server -> network.online portal.ui: display\napi server -> logs: persist\nlogs: {shape: page; style.multiple: true}\n\nnetwork.data processor -> api server\n",
+		"name": "Theme Color Overrides",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "containers-1",
+		"script": "server\n# Declares a shape inside of another shape\nserver.process\n\n# Can declare the container and child in same line\nim a parent.im a child\n\n# Since connections can also declare keys, this works too\napartment.Bedroom.Bathroom -> office.Spare Room.Bathroom: Portal\n",
+		"name": "Basic Container Syntax",
+		"category": "Containers"
+	},
+	{
+		"filename": "grid-2",
+		"script": "grid-rows: 3\nExecutive\nLegislative\nJudicial\n",
+		"name": "Simple 3x1 Grid",
+		"category": "Layout"
+	},
+	{
+		"filename": "cat",
+		"script": "how does the cat go?: {\n  link: layers.cat\n}\n\nlayers: {\n  cat: {\n    meoowww\n  }\n}\n",
+		"name": "Simple Layered Diagram",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sample5",
+		"script": "tenant: Offsite Tenant {\n  style.shadow: true\n\n  accountant: Accountant\n  security: Security\n  janitor: Janitor\n}\n\ntenant.accountant -> Quickbooks\n\nauditors: Auditors\n\nauditors -> Quickbooks\nauditors -> IRS\nQuickbooks -> Clients\n\ndataroom: E335 Data Room {\n  style.shadow: true\n  style.fill: \"#e9edef\"\n  style.stroke-width: 2\n\n  whitelist: Whitelisted Server {\n    shape: rectangle\n    style.stroke-dash: 10\n    style.stroke: \"#000E3D\"\n\n    routing: Routing blocker\n    headers: Add header tokens\n  }\n\n  platform: Microsoft Windows Fleet {\n    style.stroke-dash: 4\n    style.stroke: \"#000E3D\"\n    build\n  }\n  whitelist <-> platform: Maintain connection {style.stroke-width: 4}\n}\n\nauditors -> dataroom.platform.build\nauditors -> dataroom.whitelist.routing\ntenant.accountants -> dataroom\n\nlogging: Web based logger\n\nproduction: Data for prod {\n  style.shadow: true\n\n  network: Network availability {\n    style.stroke-dash: 10\n    style.stroke: \"#000E3D\"\n\n    instances: App instances {\n      style.multiple: true\n    }\n\n    db: App DBs {\n      shape: cylinder\n    }\n\n    secrets: AWS Secrets\n\n    containers: Docker containers\n\n    instances -> db\n    instances -> secrets\n    containers -> db\n    containers -> secrets\n  }\n}\n\ndataroom.whitelist.routing -> production.network.instances\ndataroom.whitelist.headers -> production.network.instances\nproduction.network.instances -> backups\n",
+		"name": "Security Audit Diagram",
+		"category": "Containers"
+	},
+	{
+		"filename": "tables-1",
+		"script": "my_table: {\n  shape: sql_table\n  # This is defined using the shorthand syntax for labels discussed in the containers section.\n  # But here it's for the type of a constraint.\n  # The id field becomes a map that looks like {type: int; constraint: primary_key}\n  id: int {constraint: primary_key}\n  last_updated: timestamp with time zone\n}\n",
+		"name": "Basic SQL Table",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "globs-lazy",
+		"script": "a\n\n* -> y\n\nb\nc\n",
+		"name": "Lazy Glob Matching",
+		"category": "Globs"
+	},
+	{
+		"filename": "theme-table-2",
+		"script": "vars: {\n  d2-config: {\n    theme-id: 100\n  }\n}\n\ndirection: right\n\ncostumes: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  silliness: int\n  monster: int\n  last_updated: timestamp\n}\n\nmonsters: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  movie: string\n  weight: int\n  last_updated: timestamp\n}\n\ncostumes.monster -> monsters.id\n",
+		"name": "SQL Tables with Dark Theme",
+		"category": "Variables & Config"
+	},
+	{
+		"filename": "styles-table-color",
+		"script": "direction: right\ncostumes: {\n  shape: sql_table\n  id: int {constraint: primary_key}\n  silliness: int\n  last_updated: timestamp\n  style.font-color: \"#8AF5B0\"\n}\n\nparser: {\n  shape: class\n  -lookahead: \"[]rune\"\n  +peek(): (r rune, eof bool)\n  rewind()\n  commit()\n  style.font-color: \"#8AF5B0\"\n}\n\ncostumes -> parser\n",
+		"name": "Table/Class Font Color Style",
+		"category": "Styling"
+	},
+	{
+		"filename": "imports-normal-x",
+		"script": "x: {\n  shape: circle\n}\n",
+		"name": "Simple Importable File",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sequence-diagrams-2",
+		"script": "direction: right\nBefore and after becoming friends: {\n  2007: Office chatter in 2007 {\n    shape: sequence_diagram\n    alice: Alice\n    bob: Bobby\n    awkward small talk: {\n      alice -> bob: uhm, hi\n      bob -> alice: oh, hello\n      icebreaker attempt: {\n        alice -> bob: what did you have for lunch?\n      }\n      unfortunate outcome: {\n        bob -> alice: that's personal\n      }\n    }\n  }\n\n  2012: Office chatter in 2012 {\n    shape: sequence_diagram\n    alice: Alice\n    bob: Bobby\n    alice -> bob: Want to play with ChatGPT?\n    bob -> alice: Yes!\n    bob -> alice.play: Write a play...\n    alice.play -> bob.play: about 2 friends...\n    bob.play -> alice.play: who find love...\n    alice.play -> bob.play: in a sequence diagram\n  }\n\n  2007 -> 2012: Five\\nyears\\nlater\n}\n",
+		"name": "Comparing Sequence Diagrams",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "null-implicit-connection",
+		"script": "one -> two\n\ntwo: null\n",
+		"name": "Implicit Connection Nullification",
+		"category": "Advanced Features"
+	},
+	{
+		"filename": "imported-template",
+		"script": "# Template\n",
+		"name": "Imported Template Placeholder",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "suspend-2",
+		"script": "# -----\n# Models\n# -----\nrestaurants: Restaurants {\n  style.stroke-dash: 2\n  *.style.fill: \"#66c4e3\"\n  chip: Chipotle\n  cfa: Chick-Fil-A\n  bk: Burger King\n\n  chip -> bk: competes with\n}\n\ndiners: Diners {\n  daniel\n  zack\n}\n\n# -----\n# Model Relationships\n# -----\ndiners -> restaurants: eat at\n\ndiners.daniel -> restaurants.chip: likes\ndiners.daniel -> restaurants.cfa: dislikes\n\ndiners.zack -> restaurants.bk: likes\ndiners.zack -> restaurants.chip: likes\n\n# Treat the above as models\n**: suspend\n(** -> **)[*]: suspend\n\n# Display only top level\n*: unsuspend\n(* -> *)[*]: unsuspend\n",
+		"name": "Show Top-Level Elements (Suspend/Unsuspend)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sample1",
+		"script": "runner: JobRunner {\n  shape: class\n\n  -start: datetime\n  -end: datetime\n  -running_server: string\n  -threads: int\n  -manager: JobsManager\n  +pipeline: Pipeline\n\n  +setPipeline(Pipeline p): void\n  +kickoff(threads int): bool\n}\n\njobsUI: JobRunner UI {\n  kickoff\n  halt\n}\n\nbatch: Batch {\n  manager: BatchManager {\n    shape: class\n    -num: int\n    -timeout: int\n    -pid\n\n    +getStatus(): Enum\n    +getJobs(): \"Job[]\"\n    +setTimeout(seconds int)\n  }\n  systemd: Systemd\n  selenium: Selenium\n\n  systemd -> manager: Ensure alive\n  manager -> selenium: Run job\n}\n\njobsUI -> runner: Kick off\nrunner -> batch.manager: Queue jobs\n",
+		"name": "Job Runner Class Diagram",
+		"category": "Classes & Tables"
+	},
+	{
+		"filename": "shapes-2",
+		"script": "pg: PostgreSQL\nCloud: my cloud\nCloud.shape: cloud\nSQLite\nCassandra\n",
+		"name": "Explicit Shape Declaration",
+		"category": "Shapes"
+	},
+	{
+		"filename": "pizza",
+		"script": "pizza: \"\" {\n  icon: https://upload.wikimedia.org/wikipedia/commons/a/a3/Eq_it-na_pizza-margherita_sep2005_sml.jpg\n  shape: image\n  near: top-center\n  width: 200\n  height: 200\n  style.opacity: 0\n}\nextras: \"\" {\n  style: {\n    stroke-width: 0\n    opacity: 0\n  }\n  Pepper flakes: {\n    width: 160\n    style.opacity: 0\n  }\n  Extra cheese: {\n    width: 160\n    style.opacity: 0\n  }\n  Random garnish: {\n    width: 160\n    style.opacity: 0\n  }\n}\n\ntoppings: \"\" {\n  style: {\n    stroke-width: 0\n    opacity: 0\n  }\n  Pepperoni: {\n    width: 115\n    style.opacity: 0\n  }\n  Sausage: {\n    width: 115\n    style.opacity: 0\n  }\n  Mushrooms: {\n    width: 115\n    style.opacity: 0\n  }\n  Pineapple: {\n    width: 115\n    style.opacity: 0\n  }\n}\n\nbase: \"\" {\n  style: {\n    stroke-width: 0\n    opacity: 0\n  }\n  Tomato sauce: {\n    width: 250\n    style.opacity: 0\n  }\n  Cheese base: {\n    width: 250\n    style.opacity: 0\n  }\n}\n\ndough: \"\" {\n  style: {\n    stroke-width: 0\n    opacity: 0\n  }\n  Dough: {\n    width: 500\n  }\n}\n\nextras -> toppings: {\n  style.opacity: 0\n}\ntoppings -> base: {\n  style.opacity: 0\n}\nbase -> dough: {\n  style.opacity: 0\n}\n\nsteps: {\n  base: {\n    base.Tomato sauce: {\n      style.opacity: 1\n    }\n    base.Cheese base: {\n      style.opacity: 1\n    }\n  }\n  toppings: {\n    toppings.Pepperoni: {\n      style.opacity: 1\n    }\n    toppings.Sausage: {\n      style.opacity: 1\n    }\n    toppings.Mushrooms: {\n      style.opacity: 1\n    }\n    toppings.Pineapple: {\n      style.opacity: 1\n    }\n  }\n  extras: {\n    extras.Pepper flakes: {\n      style.opacity: 1\n    }\n    extras.Extra cheese: {\n      style.opacity: 1\n    }\n    extras.Random garnish: {\n      style.opacity: 1\n    }\n  }\n  pizza: {\n    pizza.style.opacity: 1\n  }\n}\n",
+		"name": "Layered Visualization (Pizza Example)",
+		"category": "Imports & Composition"
+	},
+	{
+		"filename": "sequence-diagrams-scope",
+		"script": "Office chatter: {\n  shape: sequence_diagram\n  alice: Alice\n  bob: Bobby\n  awkward small talk: {\n    alice -> bob: uhm, hi\n    bob -> alice: oh, hello\n    icebreaker attempt: {\n      alice -> bob: what did you have for lunch?\n    }\n    unfortunate outcome: {\n      bob -> alice: that's personal\n    }\n  }\n}\n",
+		"name": "Sequence Diagram Scoping",
+		"category": "Sequence Diagrams"
+	},
+	{
+		"filename": "imports-nested",
+		"script": "serviceA -> serviceB\nserviceB.link: layers.serviceB\n\nlayers: {\n  serviceB: @serviceB\n}\n",
+		"name": "Nested Imports",
+		"category": "Imports & Composition"
+	}
+]

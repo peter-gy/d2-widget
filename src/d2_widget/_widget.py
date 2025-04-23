@@ -8,10 +8,8 @@ from d2_widget._model import CompileOptions
 
 # These defaults ensure that multi-layer, animated diagrams are rendered by default.
 DEFAULT_OPTIONS: CompileOptions = {
-    "noXMLTag": True,
     "target": "*",
     "animateInterval": 1500,
-    "pad": 25,
 }
 
 
@@ -42,7 +40,7 @@ class Widget(anywidget.AnyWidget):
         """
         super().__init__()
         self.diagram = diagram
-        self.options = {**DEFAULT_OPTIONS, **(options or {})}
+        self.options = options or DEFAULT_OPTIONS
 
     @property
     def svg(self) -> str:
