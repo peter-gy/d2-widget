@@ -10,7 +10,7 @@
 - ⚙️ **Configurability**: Support for all D2 compilation options including themes, layouts, and rendering configurations
 - 📤 **SVG Export**: Programmatically access the SVG representation for use in other documents
 - ✨ **Jupyter Cell Magic**: Use the convenient `%%d2` cell magic for quick diagram creation
-- 🧩 **Notebook Compatibility**: Works in Jupyter, Google Colab, Marimo, and other other [AnyWidget](https://github.com/manzt/anywidget)-enabled Python notebook environments
+- 🧩 **Notebook Compatibility**: Works in Jupyter, Google Colab, Marimo, and other [AnyWidget](https://github.com/manzt/anywidget)-enabled Python notebook environments
 - 🎬 **Animation Support**: Create animated diagrams with D2's native animation capabilities
 
 ## Playground
