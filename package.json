@@ -9,7 +9,7 @@
 	"dependencies": {},
 	"devDependencies": {
 		"@anywidget/types": "^0.2.0",
-		"@biomejs/biome": "1.9.4",
+		"@biomejs/biome": "2.0.6",
 		"@terrastruct/d2": "0.1.23",
 		"esbuild": "^0.25.5",
 		"typescript": "^5.8.2"
