@@ -29,7 +29,7 @@ jobs:
           uv run marimo export html-wasm playground/d2_playground.py -o playground/dist --mode run
 
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: playground/dist
 
