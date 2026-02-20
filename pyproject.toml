@@ -39,7 +39,11 @@ dev = [
 	"ty>=0.0.17,<0.1",
 	"watchfiles>=1.1",
 ]
-test = ["playwright>=1.54", "pytest>=8.4"]
+test = [
+	"playwright>=1.54",
+	"pytest>=9,<10; python_version >= '3.10'",
+	"pytest>=8.4,<9; python_version < '3.10'",
+]
 
 [build-system]
 requires = ["hatchling"]
