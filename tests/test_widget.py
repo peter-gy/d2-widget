@@ -35,5 +35,5 @@ def test_widget_copies_explicit_options() -> None:
 
 def test_widget_static_assets_exist() -> None:
     static_dir = Path(widget_module.__file__).resolve().parent / "static"
-    assert (static_dir / "widget.js").is_file() is True
-    assert (static_dir / "widget.css").is_file() is True
+    assert (static_dir / "widget.js").is_file()
+    assert (static_dir / "widget.css").is_file()

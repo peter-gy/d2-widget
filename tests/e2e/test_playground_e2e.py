@@ -4,6 +4,7 @@ import functools
 import subprocess
 import sys
 import threading
+import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 
@@ -60,24 +61,45 @@ def test_exported_playground_renders_widget_in_browser(tmp_path: Path) -> None:
         url = f"http://127.0.0.1:{server.server_port}/"
         with playwright.sync_playwright() as session:
             browser = session.chromium.launch()
-            page = browser.new_page()
-            page.on("pageerror", lambda err: page_errors.append(str(err)))
-            page.on("console", lambda msg: console_messages.append(msg.text))
+            try:
+                page = browser.new_page()
+                page.on("pageerror", lambda err: page_errors.append(str(err)))
+                page.on("console", lambda msg: console_messages.append(msg.text))
 
-            page.goto(url, wait_until="networkidle", timeout=120_000)
-            page.get_by_role("heading", name="D2 Playground").wait_for(timeout=120_000)
-            page.wait_for_timeout(5_000)
+                page.goto(url, wait_until="networkidle", timeout=120_000)
+                page.get_by_role("heading", name="D2 Playground").wait_for(
+                    timeout=120_000
+                )
 
-            runtime_bootstrap_logs = "\n".join(console_messages)
-            assert "Runtime is healthy" in runtime_bootstrap_logs
-            assert "Loading from micropip: ['d2-widget']" in runtime_bootstrap_logs
+                required_markers = (
+                    "Runtime is healthy",
+                    "Loading from micropip: ['d2-widget']",
+                )
+                deadline = time.monotonic() + 120
+                while True:
+                    runtime_bootstrap_logs = "\n".join(console_messages)
+                    if all(
+                        marker in runtime_bootstrap_logs for marker in required_markers
+                    ):
+                        break
+                    if time.monotonic() >= deadline:
+                        pytest.fail(
+                            "Timed out waiting for runtime bootstrap logs. "
+                            f"Observed logs:\n{runtime_bootstrap_logs}"
+                        )
+                    page.wait_for_timeout(250)
 
-            # Rendering can be delayed by the pyodide package installation step.
-            # If widget output is present, validate it end-to-end.
-            if page.locator(".d2-widget").count() > 0:
-                page.wait_for_selector(".d2-widget svg", timeout=120_000)
-                assert "Error generating diagram" not in page.content()
-            browser.close()
+                runtime_bootstrap_logs = "\n".join(console_messages)
+                assert "Runtime is healthy" in runtime_bootstrap_logs
+                assert "Loading from micropip: ['d2-widget']" in runtime_bootstrap_logs
+
+                # Rendering can be delayed by the pyodide package installation step.
+                # If widget output is present, validate it end-to-end.
+                if page.locator(".d2-widget").count() > 0:
+                    page.wait_for_selector(".d2-widget svg", timeout=120_000)
+                    assert "Error generating diagram" not in page.content()
+            finally:
+                browser.close()
     finally:
         server.shutdown()
         server.server_close()

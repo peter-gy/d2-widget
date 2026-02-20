@@ -5,7 +5,7 @@ from d2_widget._utils import parse_magic_arguments
 from d2_widget._version import __version__
 from d2_widget._widget import Widget
 
-__all__ = ["Widget", "__version__"]
+__all__ = ["Widget", "__version__", "parse_magic_arguments"]
 
 
 def load_ipython_extension(ipython) -> None:
