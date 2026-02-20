@@ -1,4 +1,4 @@
-from typing import TypedDict, Literal, Annotated
+from typing import Annotated, Literal, TypedDict
 
 
 class RenderOptions(TypedDict, total=False):
@@ -50,6 +50,14 @@ class RenderOptions(TypedDict, total=False):
     noXMLTag: Annotated[
         bool,
         "Omit XML tag (<?xml ...?>) from output SVG files. Useful when generating SVGs for direct HTML embedding.",
+    ]
+    ascii: Annotated[
+        bool,
+        "Render as ASCII instead of SVG [default: false]",
+    ]
+    asciiMode: Annotated[
+        Literal["standard", "extended"],
+        "ASCII rendering mode for text outputs [default: 'extended']",
     ]
 
 

@@ -40,7 +40,10 @@ class Widget(anywidget.AnyWidget):
         """
         super().__init__()
         self.diagram = diagram
-        self.options = options or DEFAULT_OPTIONS
+        resolved_options = (
+            dict(options) if options is not None else DEFAULT_OPTIONS.copy()
+        )
+        self.set_trait("options", resolved_options)
 
     @property
     def svg(self) -> str:

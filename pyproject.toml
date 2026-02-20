@@ -38,10 +38,15 @@ Documentation = "https://github.com/peter-gy/d2-widget#readme"
 # https://peps.python.org/pep-0735/
 [dependency-groups]
 dev = [
-    "jupyterlab>=4",
-    "marimo>=0.13",
-    "ruff>=0.11",
-    "watchfiles>=1",
+    "jupyterlab>=4.5",
+    "marimo>=0.19; python_version >= '3.10'",
+    "ruff>=0.15",
+    "ty>=0.0.17",
+    "watchfiles>=1.1",
+]
+test = [
+    "playwright>=1.54",
+    "pytest>=8.4",
 ]
 
 [build-system]
@@ -64,3 +69,8 @@ build_cmd = "build"
 
 [tool.uv]
 required-version = ">=0.6.0"
+
+[tool.pytest.ini_options]
+markers = [
+    "e2e: browser-driven end-to-end tests",
+]

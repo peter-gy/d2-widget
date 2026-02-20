@@ -9,7 +9,7 @@
 
 import marimo
 
-__generated_with = "0.13.0"
+__generated_with = "0.20.0"
 app = marimo.App(
     width="full",
     app_title="D2 Playground",
@@ -19,15 +19,13 @@ app = marimo.App(
 
 @app.cell(hide_code=True)
 def _(mo):
-    mo.md(
-        r"""
-        # D2 Playground
+    mo.md(r"""
+    # D2 Playground
 
-        Dive into D2 with this interactive playground — create diagrams from scratch or explore curated examples.
+    Dive into D2 with this interactive playground — create diagrams from scratch or explore curated examples.
 
-        > Inspired by [play.d2lang.com](https://play.d2lang.com/), powered by [d2-widget](https://github.com/peter-gy/d2-widget) and [marimo](https://marimo.io/).
-        """
-    )
+    > Inspired by [play.d2lang.com](https://play.d2lang.com/), powered by [d2-widget](https://github.com/peter-gy/d2-widget) and [marimo](https://marimo.io/).
+    """)
     return
 
 
@@ -167,26 +165,33 @@ def _(mo, widget):
 
 
 @app.cell(hide_code=True)
-def _():
-    theme_config = [
-        {"id": 0, "name": "Default"},
-        {"id": 1, "name": "Neutral gray"},
-        {"id": 3, "name": "Flagship Terrastruct"},
-        {"id": 4, "name": "Cool classics"},
-        {"id": 5, "name": "Mixed berry blue"},
-        {"id": 6, "name": "Grape soda"},
-        {"id": 7, "name": "Aubergine"},
-        {"id": 8, "name": "Colorblind clear"},
-        {"id": 100, "name": "Vanilla nitro cola"},
-        {"id": 101, "name": "Orange creamsicle"},
-        {"id": 102, "name": "Shirley temple"},
-        {"id": 103, "name": "Earth tones"},
-        {"id": 104, "name": "Everglade green"},
-        {"id": 105, "name": "Buttered toast"},
-        {"id": 200, "name": "Dark mauve"},
-        {"id": 300, "name": "Terminal"},
-        {"id": 301, "name": "Terminal grayscale"},
-    ]
+def _(TypedDict, cast):
+    class ThemeConfig(TypedDict):
+        id: int
+        name: str
+
+    theme_config = cast(
+        list[ThemeConfig],
+        [
+            {"id": 0, "name": "Default"},
+            {"id": 1, "name": "Neutral gray"},
+            {"id": 3, "name": "Flagship Terrastruct"},
+            {"id": 4, "name": "Cool classics"},
+            {"id": 5, "name": "Mixed berry blue"},
+            {"id": 6, "name": "Grape soda"},
+            {"id": 7, "name": "Aubergine"},
+            {"id": 8, "name": "Colorblind clear"},
+            {"id": 100, "name": "Vanilla nitro cola"},
+            {"id": 101, "name": "Orange creamsicle"},
+            {"id": 102, "name": "Shirley temple"},
+            {"id": 103, "name": "Earth tones"},
+            {"id": 104, "name": "Everglade green"},
+            {"id": 105, "name": "Buttered toast"},
+            {"id": 200, "name": "Dark mauve"},
+            {"id": 300, "name": "Terminal"},
+            {"id": 301, "name": "Terminal grayscale"},
+        ],
+    )
 
     def theme_id(name: str) -> int:
         for cfg in theme_config:
@@ -296,12 +301,14 @@ def _():
 
 @app.cell(hide_code=True)
 def _():
+    from typing import TypedDict, cast
+
     import httpx
     import marimo as mo
 
     import d2_widget
 
-    return d2_widget, httpx, mo
+    return TypedDict, cast, d2_widget, httpx, mo
 
 
 if __name__ == "__main__":
