@@ -6,7 +6,7 @@
  */
 
 import type { RenderProps } from "@anywidget/types";
-import { type CompileOptions, D2 } from "https://esm.sh/@terrastruct/d2@0.1.23";
+import { type CompileOptions, D2 } from "https://esm.sh/@terrastruct/d2@0.1.33";
 import "./widget.css";
 
 /* Specifies attributes defined with traitlets in ../src/d2_widget/__init__.py */
@@ -70,8 +70,7 @@ export default () => {
 					getRoot().innerHTML = svg;
 				} catch (error: unknown) {
 					console.error(error);
-					const errorMessage =
-						error instanceof Error ? error.message : "Unknown error";
+					const errorMessage = error instanceof Error ? error.message : "Unknown error";
 					getRoot().innerHTML = `<div class="error">Error generating diagram: ${errorMessage}</div>`;
 				}
 				isRendering = false;

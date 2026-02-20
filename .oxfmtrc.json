@@ -1,0 +1,12 @@
+{
+	"$schema": "./node_modules/oxfmt/configuration_schema.json",
+	"useTabs": true,
+	"ignorePatterns": [
+		"node_modules/**",
+		"dist/**",
+		"playground/dist/**",
+		"src/d2_widget/static/**",
+		"uv.lock",
+		"pnpm-lock.yaml"
+	]
+}
