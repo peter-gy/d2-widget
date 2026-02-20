@@ -1,0 +1,8 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"env": {
+		"builtin": true,
+		"browser": true
+	},
+	"ignorePatterns": ["node_modules/**", "dist/**", "playground/dist/**", "src/d2_widget/static/**"]
+}

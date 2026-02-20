@@ -6,12 +6,27 @@ on:
       - main
 
 jobs:
+  qa:
+    uses: ./.github/workflows/lint.yml
+
   build:
     runs-on: ubuntu-latest
+    needs:
+      - qa
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version-file: ".python-version"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
 
       - name: Setup `uv`
         uses: astral-sh/setup-uv@v7
@@ -21,12 +36,13 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pnpm install
-          uv sync
+          pnpm install --frozen-lockfile
+          uv sync --all-groups
 
       - name: Export notebook
         run: |
-          uv run marimo export html-wasm playground/d2_playground.py -o playground/dist --mode run
+          cd playground
+          uv run --project .. marimo export html-wasm d2_playground.py -o dist --mode run
 
       - name: Upload Pages Artifact
         uses: actions/upload-pages-artifact@v4

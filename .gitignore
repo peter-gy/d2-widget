@@ -2,6 +2,12 @@ node_modules
 .venv
 dist
 .DS_Store
+.mypy_cache
+.ruff_cache
+.pytest_cache
+playwright-report
+test-results
+playground/__marimo__/
 
 # Python
 __pycache__

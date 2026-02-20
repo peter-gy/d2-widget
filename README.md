@@ -119,38 +119,6 @@ z -> x
 
 <img src="https://raw.githubusercontent.com/peter-gy/d2-widget/refs/heads/main/assets/examples/cell-magic.gif" alt="example with cell magic" width="100%"/>
 
-## Development
+## Contributing
 
-We recommend using [uv](https://github.com/astral-sh/uv) for development.
-It will automatically manage virtual environments and dependencies for you.
-
-```sh
-uv run jupyter lab example.ipynb
-```
-
-Alternatively, create and manage your own virtual environment:
-
-```sh
-python -m venv .venv
-source .venv/bin/activate
-pip install -e ".[dev]"
-jupyter lab example.ipynb
-```
-
-The widget front-end code bundles it's JavaScript dependencies. After setting up Python,
-make sure to install these dependencies locally:
-
-```sh
-pnpm install
-```
-
-While developing, you can run the following in a separate terminal to automatically
-rebuild JavaScript as you make changes:
-
-```sh
-pnpm dev
-```
-
-Open `example.ipynb` in JupyterLab, VS Code, or your favorite editor
-to start developing. Changes made in `js/` will be reflected
-in the notebook.
+Contributor setup, dev workflow, and QA commands are in [`CONTRIBUTING.md`](CONTRIBUTING.md).

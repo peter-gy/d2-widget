@@ -3,19 +3,25 @@
 		"dev": "esbuild js/widget.ts --minify --format=esm --bundle --outdir=src/d2_widget/static --sourcemap=inline --watch",
 		"build": "esbuild js/widget.ts --minify --format=esm --bundle --outdir=src/d2_widget/static",
 		"typecheck": "tsc --noEmit",
-		"format": "biome format --write .",
-		"lint": "biome lint ."
+		"format": "oxfmt --write .",
+		"format:check": "oxfmt --check .",
+		"lint": "oxlint . --deny-warnings"
 	},
-	"dependencies": {},
 	"devDependencies": {
 		"@anywidget/types": "^0.2.0",
-		"@biomejs/biome": "1.9.4",
-		"@terrastruct/d2": "0.1.23",
-		"esbuild": "^0.25.5",
-		"typescript": "^5.8.2"
+		"@terrastruct/d2": "0.1.33",
+		"esbuild": "^0.27.3",
+		"oxfmt": "0.34.x",
+		"oxlint": "^1.49.0",
+		"typescript": "^5.9.3"
 	},
-	"packageManager": "pnpm@10.4.1",
+	"engines": {
+		"node": "24.x"
+	},
+	"packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
 	"pnpm": {
-		"onlyBuiltDependencies": ["@biomejs/biome", "esbuild"]
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
 	}
 }
