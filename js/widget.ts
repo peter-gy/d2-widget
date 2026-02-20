@@ -71,7 +71,11 @@ export default () => {
 				} catch (error: unknown) {
 					console.error(error);
 					const errorMessage = error instanceof Error ? error.message : "Unknown error";
-					getRoot().innerHTML = `<div class="error">Error generating diagram: ${errorMessage}</div>`;
+					const root = getRoot();
+					const errorElement = document.createElement("div");
+					errorElement.className = "error";
+					errorElement.textContent = `Error generating diagram: ${errorMessage}`;
+					root.replaceChildren(errorElement);
 				}
 				isRendering = false;
 			};
