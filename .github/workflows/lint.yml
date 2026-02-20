@@ -39,8 +39,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: "10.30.1"
 
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
@@ -88,6 +86,14 @@ jobs:
       - name: Setup uv
         uses: astral-sh/setup-uv@v5
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: ".nvmrc"
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
       - name: Install Python test dependencies
         run: uv sync --group test --no-default-groups
 
@@ -119,8 +125,6 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: "10.30.1"
 
       - name: Install frontend dependencies
         run: pnpm install --frozen-lockfile
