@@ -2,31 +2,26 @@
 name = "d2-widget"
 version = "0.0.3"
 description = "An AnyWidget for displaying declarative diagrams written in D2"
-authors = [
-    {name = "Péter Ferenc Gyarmati", email = "dev.petergy@gmail.com"},
-]
-license = {file = "LICENSE"}
+authors = [{ name = "Péter Ferenc Gyarmati", email = "dev.petergy@gmail.com" }]
+license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.9"
 keywords = ["anywidget", "d2", "diagram", "jupyter", "widget"]
 classifiers = [
-    "Development Status :: 4 - Beta",
-    "Framework :: Jupyter",
-    "Intended Audience :: Developers",
-    "Intended Audience :: Science/Research",
-    "License :: OSI Approved :: MIT License",
-    "Programming Language :: Python",
-    "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
-    "Programming Language :: Python :: 3.12",
-    "Programming Language :: Python :: 3.13",
+	"Development Status :: 4 - Beta",
+	"Framework :: Jupyter",
+	"Intended Audience :: Developers",
+	"Intended Audience :: Science/Research",
+	"License :: OSI Approved :: MIT License",
+	"Programming Language :: Python",
+	"Programming Language :: Python :: 3",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
+	"Programming Language :: Python :: 3.13",
 ]
-dependencies = [
-    "anywidget>=0.9",
-    "traitlets>=5",
-]
+dependencies = ["anywidget>=0.9", "traitlets>=5"]
 
 [project.urls]
 Homepage = "https://github.com/peter-gy/d2-widget"
@@ -38,16 +33,13 @@ Documentation = "https://github.com/peter-gy/d2-widget#readme"
 # https://peps.python.org/pep-0735/
 [dependency-groups]
 dev = [
-    "jupyterlab>=4.5",
-    "marimo>=0.19; python_version >= '3.10'",
-    "ruff>=0.15",
-    "ty>=0.0.17",
-    "watchfiles>=1.1",
+	"jupyterlab>=4.5",
+	"marimo>=0.19; python_version >= '3.10'",
+	"ruff>=0.15",
+	"ty>=0.0.17,<0.1",
+	"watchfiles>=1.1",
 ]
-test = [
-    "playwright>=1.54",
-    "pytest>=8.4",
-]
+test = ["playwright>=1.54", "pytest>=8.4"]
 
 [build-system]
 requires = ["hatchling"]
@@ -71,6 +63,4 @@ build_cmd = "build"
 required-version = ">=0.6.0"
 
 [tool.pytest.ini_options]
-markers = [
-    "e2e: browser-driven end-to-end tests",
-]
+markers = ["e2e: browser-driven end-to-end tests"]
