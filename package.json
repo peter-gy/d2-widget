@@ -11,8 +11,8 @@
 		"@anywidget/types": "^0.2.0",
 		"@terrastruct/d2": "0.1.33",
 		"esbuild": "^0.27.3",
-		"oxfmt": "0.34.x",
-		"oxlint": "^1.49.0",
+		"oxfmt": "0.35.x",
+		"oxlint": "^1.50.0",
 		"typescript": "^5.9.3"
 	},
 	"engines": {
