@@ -8,12 +8,12 @@
 		"lint": "oxlint . --deny-warnings"
 	},
 	"devDependencies": {
-		"@anywidget/types": "^0.2.0",
+		"@anywidget/types": "^0.4.0",
 		"@terrastruct/d2": "0.1.33",
-		"esbuild": "^0.27.3",
-		"oxfmt": "0.35.x",
-		"oxlint": "^1.50.0",
-		"typescript": "^5.9.3"
+		"esbuild": "^0.28.0",
+		"oxfmt": "0.47.x",
+		"oxlint": "^1.62.0",
+		"typescript": "^6.0.3"
 	},
 	"engines": {
 		"node": "24.x"
