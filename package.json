@@ -8,20 +8,19 @@
 		"lint": "oxlint . --deny-warnings"
 	},
 	"devDependencies": {
-		"@anywidget/types": "^0.2.0",
+		"@anywidget/types": "^0.4.0",
 		"@terrastruct/d2": "0.1.33",
-		"esbuild": "^0.27.3",
-		"oxfmt": "0.35.x",
-		"oxlint": "^1.50.0",
-		"typescript": "^5.9.3"
+		"esbuild": "^0.28.1",
+		"oxfmt": "0.55.0",
+		"oxlint": "^1.70.0",
+		"typescript": "^6.0.3"
 	},
-	"engines": {
-		"node": "24.x"
+	"devEngines": {
+		"runtime": {
+			"name": "node",
+			"version": ">=24",
+			"onFail": "download"
+		}
 	},
-	"packageManager": "pnpm@10.30.1+sha512.3590e550d5384caa39bd5c7c739f72270234b2f6059e13018f975c313b1eb9fefcc09714048765d4d9efe961382c312e624572c0420762bdc5d5940cdf9be73a",
-	"pnpm": {
-		"onlyBuiltDependencies": [
-			"esbuild"
-		]
-	}
+	"packageManager": "pnpm@11.8.0+sha512.c1f5e7c4cb241c8f174b743851d82f42b802324afc8b0f116b96adb15aa06664948dde36960a3ba1079ba5b4b29dd0140135b94b5b5f5263592249d68e555f26"
 }

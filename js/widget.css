@@ -2,6 +2,12 @@
 	width: 100%;
 }
 
+.d2-widget svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
 .error {
 	font-family: Consolas, monospace;
 	padding: 10px;

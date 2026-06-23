@@ -37,6 +37,7 @@ async function diagramToSvg(d2: D2, diagram: string, options: CompileOptions) {
 export default () => {
 	const d2 = new D2();
 	let isRendering = false;
+	let renderAgain = false;
 
 	return {
 		async render({ model, el }: RenderProps<Model>) {
@@ -57,27 +58,32 @@ export default () => {
 
 			// Diagramming logic
 			const update = async () => {
-				// If another update is already in progress, do nothing
 				if (isRendering) {
-					console.log("Another update is already in progress, skipping");
+					renderAgain = true;
 					return;
 				}
 
 				isRendering = true;
 				try {
-					const svg = await diagramToSvg(d2, getDiagram(), getOptions());
-					setSvg(svg);
-					getRoot().innerHTML = svg;
-				} catch (error: unknown) {
-					console.error(error);
-					const errorMessage = error instanceof Error ? error.message : "Unknown error";
-					const root = getRoot();
-					const errorElement = document.createElement("div");
-					errorElement.className = "error";
-					errorElement.textContent = `Error generating diagram: ${errorMessage}`;
-					root.replaceChildren(errorElement);
+					do {
+						renderAgain = false;
+						try {
+							const svg = await diagramToSvg(d2, getDiagram(), getOptions());
+							setSvg(svg);
+							getRoot().innerHTML = svg;
+						} catch (error: unknown) {
+							console.error(error);
+							const errorMessage = error instanceof Error ? error.message : "Unknown error";
+							const root = getRoot();
+							const errorElement = document.createElement("div");
+							errorElement.className = "error";
+							errorElement.textContent = `Error generating diagram: ${errorMessage}`;
+							root.replaceChildren(errorElement);
+						}
+					} while (renderAgain);
+				} finally {
+					isRendering = false;
 				}
-				isRendering = false;
 			};
 
 			// Set up root element
