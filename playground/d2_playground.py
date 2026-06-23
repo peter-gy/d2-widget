@@ -53,7 +53,8 @@ def _(
                     with_label(padding, "↕️ Padding"),
                     with_label(scale, "🔍 Scale"),
                     mo.vstack([download_svg, download_d2]),
-                ]
+                ],
+                wrap=True,
             ),
             mo.md("----"),
             mo.hstack(
@@ -62,6 +63,7 @@ def _(
                     widget,
                 ],
                 widths="equal",
+                wrap=True,
             ),
         ],
     )
@@ -88,24 +90,22 @@ def _(get_script, mo, set_script):
 
 
 @app.cell(hide_code=True)
-def _(d2_widget, mo):
-    widget = mo.ui.anywidget(d2_widget.Widget(""))
+def _(d2_widget, get_script, mo, padding, scale, sketch, theme, theme_id):
+    widget = mo.ui.anywidget(
+        d2_widget.Widget(
+            get_script(),
+            {
+                "target": "*",
+                "sketch": sketch.value,
+                "themeID": theme_id(theme.value),
+                "pad": padding.value,
+                "scale": scale.value,
+                "animateInterval": 2000,
+                "center": True,
+            },
+        )
+    )
     return (widget,)
-
-
-@app.cell(hide_code=True)
-def _(get_script, padding, scale, sketch, theme, theme_id, widget):
-    widget.diagram = get_script()
-    widget.options = {
-        "target": "*",
-        "sketch": sketch.value,
-        "themeID": theme_id(theme.value),
-        "pad": padding.value,
-        "scale": scale.value,
-        "animateInterval": 2000,
-        "center": True,
-    }
-    return
 
 
 @app.cell(hide_code=True)

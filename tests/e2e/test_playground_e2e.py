@@ -7,6 +7,7 @@ import threading
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from typing import Any
 
 import pytest
 
@@ -16,7 +17,7 @@ PLAYGROUND_FILE = REPO_ROOT / "playground" / "d2_playground.py"
 
 
 class _QuietHandler(SimpleHTTPRequestHandler):
-    def log_message(self, *args: object) -> None:
+    def log_message(self, format: str, *args: Any) -> None:
         return
 
 
