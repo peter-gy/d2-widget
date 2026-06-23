@@ -24,23 +24,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".nvmrc"
-
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install Python
+        run: uv python install "$(cat .python-version)"
 
-      - name: Install frontend dependencies
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install frontend dependencies and Node runtime
         run: pnpm install --frozen-lockfile
 
       - name: Install Python dependencies
@@ -78,24 +71,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: ${{ matrix.python-version }}
-
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".nvmrc"
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install Python
+        run: uv python install "${{ matrix.python-version }}"
 
       - name: Install Python test dependencies
-        run: uv sync --group test --no-default-groups
+        run: uv sync --python "${{ matrix.python-version }}" --group test --no-default-groups
 
       - name: Run non-e2e tests
         run: uv run pytest -q -m "not e2e"
@@ -110,23 +93,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".nvmrc"
-
       - name: Setup uv
         uses: astral-sh/setup-uv@v7
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - name: Install Python
+        run: uv python install "$(cat .python-version)"
 
-      - name: Install frontend dependencies
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install frontend dependencies and Node runtime
         run: pnpm install --frozen-lockfile
 
       - name: Install Python dependencies

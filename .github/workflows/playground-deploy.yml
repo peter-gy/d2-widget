@@ -18,23 +18,16 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      - name: Setup Python
-        uses: actions/setup-python@v6
-        with:
-          python-version-file: ".python-version"
-
-      - name: Setup Node
-        uses: actions/setup-node@v6
-        with:
-          node-version-file: ".nvmrc"
-
       - name: Setup `uv`
         uses: astral-sh/setup-uv@v7
 
-      - name: Setup `pnpm`
-        uses: pnpm/action-setup@v4
+      - name: Install Python
+        run: uv python install "$(cat .python-version)"
 
-      - name: Install dependencies
+      - name: Setup `pnpm`
+        uses: pnpm/action-setup@v6
+
+      - name: Install dependencies and Node runtime
         run: |
           pnpm install --frozen-lockfile
           uv sync --all-groups
@@ -45,7 +38,7 @@ jobs:
           uv run --project .. marimo export html-wasm d2_playground.py -o dist --mode run
 
       - name: Upload Pages Artifact
-        uses: actions/upload-pages-artifact@v4
+        uses: actions/upload-pages-artifact@v5
         with:
           path: playground/dist
 
@@ -63,6 +56,6 @@ jobs:
     steps:
       - name: 🌐 Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v5
         with:
           artifact_name: github-pages
