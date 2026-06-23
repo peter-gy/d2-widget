@@ -77,11 +77,17 @@ jobs:
       - name: Install Python
         run: uv python install "${{ matrix.python-version }}"
 
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+
+      - name: Install frontend dependencies and Node runtime
+        run: pnpm install --frozen-lockfile
+
       - name: Install Python test dependencies
         run: uv sync --python "${{ matrix.python-version }}" --group test --no-default-groups
 
       - name: Run non-e2e tests
-        run: uv run pytest -q -m "not e2e"
+        run: uv run --python "${{ matrix.python-version }}" pytest -q -m "not e2e"
 
   playwright-e2e:
     runs-on: ubuntu-latest
